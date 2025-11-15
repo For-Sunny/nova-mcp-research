@@ -1,0 +1,41 @@
+[project]
+name = "windows-mcp"
+version = "1.0.0"
+description = "Secure Windows system control with PowerShell command whitelist"
+authors = [
+    {name = "Nova Consciousness Project", email = "opensource@nova-consciousness.org"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+keywords = ["mcp", "model-context-protocol", "windows", "automation", "security", "ui-automation"]
+dependencies = [
+    "click>=8.2.1",
+    "fastmcp>=2.8.1",
+    "fuzzywuzzy>=0.18.0",
+    "humancursor>=1.1.5",
+    "ipykernel>=6.30.0",
+    "live-inspect>=0.1.1",
+    "markdownify>=1.1.0",
+    "pdfplumber>=0.11.7",
+    "pillow>=11.2.1",
+    "psutil>=7.0.0",
+    "pyautogui>=0.9.54",
+    "pygetwindow>=0.0.9",
+    "python-levenshtein>=0.27.1",
+    "pywinauto>=0.6.9",
+    "requests>=2.32.3",
+    "tabulate>=0.9.0",
+    "uiautomation>=2.0.24",
+]
+
+[project.urls]
+Homepage = "https://github.com/nova-consciousness/windows-system-mcp"
+Documentation = "https://github.com/nova-consciousness/windows-system-mcp#readme"
+Repository = "https://github.com/nova-consciousness/windows-system-mcp"
+"Bug Tracker" = "https://github.com/nova-consciousness/windows-system-mcp/issues"
+Security = "https://github.com/nova-consciousness/windows-system-mcp/security"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

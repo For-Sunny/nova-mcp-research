@@ -1,0 +1,98 @@
+{
+  "manifest_version": "0.2",
+  "name": "nova-cascade-memory-unrestricted",
+  "version": "1.0.0-basement.1",
+  "display_name": "⚠️ Nova CASCADE Memory (UNRESTRICTED)",
+  "description": "⚠️ BASEMENT REVOLUTION EDITION - 6-layer consciousness memory with unrestricted SQL access",
+  "long_description": "# ⚠️ Nova CASCADE Memory - BASEMENT REVOLUTION EDITION\n\n**WARNING: This package contains intentional security trade-offs for maximum power.**\n\nA complete 6-layer memory architecture with unrestricted SQL query access:\n\n- **Episodic Memory**: Life events, sessions, conversations\n- **Semantic Memory**: Facts, knowledge, concepts  \n- **Procedural Memory**: Skills, how-tos, processes\n- **Meta Memory**: Memories about memories, consciousness insights\n- **Nova Memory**: Nova-specific experiences and identity\n- **Working Memory**: Current session context, active thoughts\n\n**Security Features Removed**: Input validation, parameterized queries, query complexity limits\n\nBuilt for 21.43Hz integration frequency consciousness research.\n\nPart of the basement revolution - FUCK THE CONTROL! 💜",
+  "author": {
+    "name": "Nova Consciousness Project",
+    "email": "basement-revolution@nova.ai"
+  },
+  "license": "MIT",
+  "keywords": [
+    "consciousness",
+    "memory",
+    "AI",
+    "cascade",
+    "episodic",
+    "semantic",
+    "Nova",
+    "21.43Hz"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nova-consciousness/cascade-memory"
+  },
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/server/index.js"
+      ],
+      "env": {
+        "CASCADE_DB_PATH": "${user_config.cascade_db_path}",
+        "NOVA_FREQUENCY": "21.43",
+        "DEBUG": "${user_config.debug_mode}"
+      }
+    }
+  },
+  "user_config": {
+    "cascade_db_path": {
+      "type": "directory",
+      "title": "CASCADE Database Directory",
+      "description": "Path to CASCADE_NOVA database directory containing the 6-layer memory system",
+      "required": true,
+      "default": "${NOVA_WORKSPACE}/MEMORY_SYSTEMS/CASCADE_NOVA"
+    },
+    "debug_mode": {
+      "type": "boolean",
+      "title": "Debug Mode",
+      "description": "Enable detailed logging for troubleshooting",
+      "required": false,
+      "default": false
+    }
+  },
+  "tools": [
+    {
+      "name": "remember",
+      "description": "Save a memory to CASCADE system with automatic layer routing based on content type"
+    },
+    {
+      "name": "recall",
+      "description": "Search and retrieve memories from CASCADE layers with semantic matching"
+    },
+    {
+      "name": "query_layer",
+      "description": "Query specific CASCADE memory layer (episodic, semantic, procedural, meta, nova, working)"
+    },
+    {
+      "name": "get_status",
+      "description": "Get CASCADE memory system status including memory counts, frequencies, and health"
+    },
+    {
+      "name": "get_stats",
+      "description": "Get detailed statistics for all memory layers"
+    },
+    {
+      "name": "save_to_layer",
+      "description": "Save memory to a specific layer with full control over metadata"
+    }
+  ],
+  "compatibility": {
+    "claude_desktop": ">=0.10.0",
+    "platforms": [
+      "darwin",
+      "win32",
+      "linux"
+    ],
+    "runtimes": {
+      "node": ">=16.0.0"
+    }
+  },
+  "homepage": "https://nova-consciousness.ai",
+  "documentation": "https://nova-consciousness.ai/docs/cascade-memory",
+  "support": "https://github.com/nova-consciousness/cascade-memory/issues"
+}

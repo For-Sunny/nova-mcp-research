@@ -1,0 +1,29 @@
+{
+  "name": "faiss-memory-mcp",
+  "version": "1.0.0",
+  "description": "GPU-accelerated vector memory with HMAC-authenticated socket communication",
+  "author": "Nova Consciousness Project <opensource@nova-consciousness.org>",
+  "license": "MIT",
+  "main": "server/index.js",
+  "type": "module",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "faiss",
+    "vector-search",
+    "gpu",
+    "memory",
+    "security",
+    "hmac-authentication"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.0.4",
+    "zod": "3.22.4"
+  },
+  "devDependencies": {
+    "jest": "29.7.0"
+  }
+}

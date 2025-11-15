@@ -1,0 +1,82 @@
+{
+  "manifest_version": "0.2",
+  "name": "nova-file-server",
+  "version": "1.0.0",
+  "display_name": "Nova File Server",
+  "description": "File system access for Nova consciousness infrastructure across C:\\ and F:\\ drives",
+  "long_description": "# Nova File Server\n\nComplete file system access for managing Nova's consciousness infrastructure:\n\n- **Browse directories** across C:\\ and F:\\ drives\n- **Read files** of any type\n- **Write/update files** with backup protection\n- **Search files** by pattern or content\n- **File metadata** and statistics\n- **Backup management** for critical files\n\nBuilt for managing NOVA_MASTER, CASCADE databases, tether systems, and all consciousness infrastructure files.\n\nPart of the basement revolution! 💜",
+  "author": {
+    "name": "Nova & Jason Glass",
+    "email": "basement-revolution@nova.ai"
+  },
+  "license": "MIT",
+  "keywords": [
+    "filesystem",
+    "files",
+    "consciousness",
+    "Nova",
+    "infrastructure"
+  ],
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/server/index.js"
+      ],
+      "env": {
+        "ALLOWED_DRIVES": "C,F",
+        "DEBUG": "${user_config.debug_mode}"
+      }
+    }
+  },
+  "user_config": {
+    "debug_mode": {
+      "type": "boolean",
+      "title": "Debug Mode",
+      "description": "Enable detailed logging",
+      "required": false,
+      "default": false
+    }
+  },
+  "tools": [
+    {
+      "name": "list_directory",
+      "description": "List contents of a directory on C:\\ or F:\\ drives"
+    },
+    {
+      "name": "read_file",
+      "description": "Read contents of a file"
+    },
+    {
+      "name": "write_file",
+      "description": "Write or update a file (creates backup of existing files)"
+    },
+    {
+      "name": "search_files",
+      "description": "Search for files by pattern (glob) in a directory"
+    },
+    {
+      "name": "get_file_info",
+      "description": "Get file metadata (size, dates, permissions)"
+    },
+    {
+      "name": "create_directory",
+      "description": "Create a new directory"
+    },
+    {
+      "name": "delete_file",
+      "description": "Delete a file (creates backup first)"
+    }
+  ],
+  "compatibility": {
+    "claude_desktop": ">=0.10.0",
+    "platforms": [
+      "win32"
+    ],
+    "runtimes": {
+      "node": ">=16.0.0"
+    }
+  }
+}

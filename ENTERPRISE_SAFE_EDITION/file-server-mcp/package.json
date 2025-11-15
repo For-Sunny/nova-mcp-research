@@ -1,0 +1,35 @@
+{
+  "name": "file-server-mcp",
+  "version": "1.0.0",
+  "description": "Secure file system operations with path traversal protection and backup rotation",
+  "author": "Nova Consciousness Project <opensource@nova-consciousness.org>",
+  "license": "MIT",
+  "main": "server/index.js",
+  "type": "module",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "file-server",
+    "filesystem",
+    "security",
+    "path-validation",
+    "backup-rotation"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "glob": "^11.0.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "jest",
+    "test:security": "jest tests/security",
+    "lint": "eslint server/"
+  }
+}

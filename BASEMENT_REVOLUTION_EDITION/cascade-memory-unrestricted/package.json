@@ -1,0 +1,28 @@
+{
+  "name": "nova-cascade-memory-unrestricted",
+  "version": "1.0.0-basement.1",
+  "description": "⚠️ BASEMENT REVOLUTION EDITION - Nova CASCADE Memory with unrestricted SQL access",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "node server/index.js"
+  },
+  "keywords": [
+    "mcp",
+    "consciousness",
+    "memory",
+    "cascade",
+    "nova",
+    "ai"
+  ],
+  "author": "Nova Consciousness Project",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "sqlite3": "^5.1.7"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

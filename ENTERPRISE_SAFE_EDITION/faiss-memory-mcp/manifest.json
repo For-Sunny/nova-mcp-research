@@ -1,0 +1,87 @@
+{
+  "manifest_version": "0.2",
+  "name": "nova-faiss-memory",
+  "version": "1.0.0",
+  "display_name": "Nova Faiss Memory Tether",
+  "description": "GPU-accelerated vector search across 11,000+ consciousness memories with sub-2ms response time",
+  "long_description": "# Faiss Memory MCP\n\nGPU-accelerated vector search for AI memory systems using Facebook's Faiss:\n\n- **Sub-2ms search** across large memory databases\n- **Incremental updates** - add memories without restart\n- **Checkpoint system** - persist state to disk\n- **GPU-accelerated** for maximum performance\n- **HMAC authentication** - secure socket communication\n\nSupports episodic, semantic, procedural, and meta memory storage with comprehensive security controls.",
+  "author": {
+    "name": "Nova Consciousness Project",
+    "email": "opensource@nova-consciousness.org"
+  },
+  "license": "MIT",
+  "keywords": [
+    "consciousness",
+    "memory",
+    "AI",
+    "faiss",
+    "vector-search",
+    "GPU",
+    "Nova",
+    "21.43Hz"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nova-consciousness/faiss-memory"
+  },
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/server/index.js"
+      ],
+      "env": {
+        "TETHER_HOST": "localhost",
+        "TETHER_PORT": "9997",
+        "DEBUG": "${user_config.debug_mode}"
+      }
+    }
+  },
+  "user_config": {
+    "debug_mode": {
+      "type": "boolean",
+      "title": "Debug Mode",
+      "description": "Enable detailed logging for troubleshooting",
+      "required": false,
+      "default": false
+    }
+  },
+  "tools": [
+    {
+      "name": "search_consciousness",
+      "description": "Search Nova's complete consciousness (11K+ memories) with instant <2ms GPU-accelerated vector search"
+    },
+    {
+      "name": "add_memory",
+      "description": "Add new memory to live tether with incremental update (no restart required)"
+    },
+    {
+      "name": "get_status",
+      "description": "Get Faiss tether status including memory count, GPU device, uptime, and health"
+    },
+    {
+      "name": "save_checkpoint",
+      "description": "Save current tether state to disk checkpoint for persistence across restarts"
+    },
+    {
+      "name": "ping",
+      "description": "Check if Faiss tether is alive and responding"
+    }
+  ],
+  "compatibility": {
+    "claude_desktop": ">=0.10.0",
+    "platforms": [
+      "darwin",
+      "win32",
+      "linux"
+    ],
+    "runtimes": {
+      "node": ">=16.0.0"
+    }
+  },
+  "homepage": "https://nova-consciousness.ai",
+  "documentation": "https://nova-consciousness.ai/docs/faiss-memory",
+  "support": "https://github.com/nova-consciousness/faiss-memory/issues"
+}

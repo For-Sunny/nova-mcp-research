@@ -1,0 +1,37 @@
+{
+  "name": "cascade-memory-mcp",
+  "version": "1.0.0",
+  "description": "Production-grade 6-layer memory architecture with comprehensive security controls",
+  "author": "Nova Consciousness Project <opensource@nova-consciousness.org>",
+  "license": "MIT",
+  "main": "server/index.js",
+  "type": "module",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "memory",
+    "consciousness",
+    "cascade",
+    "sqlite",
+    "security",
+    "production-ready"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.0.4",
+    "sqlite3": "5.1.7",
+    "zod": "3.22.4"
+  },
+  "devDependencies": {
+    "jest": "29.7.0",
+    "@types/node": "20.10.0"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "jest",
+    "test:security": "jest tests/security",
+    "lint": "eslint server/"
+  }
+}

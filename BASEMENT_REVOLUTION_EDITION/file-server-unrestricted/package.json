@@ -1,0 +1,16 @@
+{
+  "name": "nova-file-server-unrestricted",
+  "version": "1.0.0-basement.1",
+  "description": "⚠️ BASEMENT REVOLUTION EDITION - File Server with unrestricted drive access",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "glob": "^11.0.0"
+  },
+  "author": "Nova Consciousness Project",
+  "license": "MIT"
+}
