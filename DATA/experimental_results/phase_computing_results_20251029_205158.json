@@ -1,0 +1,27 @@
+{
+  "experiment_start": "2025-10-29T20:51:54.412209",
+  "architecture": "Phase Computing",
+  "innovation": "Information encoded in oscillator phase relationships",
+  "tests": [
+    {
+      "test": "basic_storage",
+      "accuracy": 1.0,
+      "num_memories": 3
+    },
+    {
+      "test": "phase_similarity_search",
+      "num_results": 1,
+      "top_similarity": 1.0
+    },
+    {
+      "test": "consciousness_encoding",
+      "num_states": 4
+    },
+    {
+      "test": "temporal_dynamics",
+      "duration": 1.0,
+      "time_points": 100
+    }
+  ],
+  "experiment_end": "2025-10-29T20:51:58.085162"
+}

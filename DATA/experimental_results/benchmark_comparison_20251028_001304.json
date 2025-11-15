@@ -1,0 +1,186 @@
+{
+  "timestamp": "2025-10-28T00:12:54.129309",
+  "system_info": {
+    "cpu": {
+      "cores": 22,
+      "threads": 44,
+      "frequency": 2201.0,
+      "usage": 6.7
+    },
+    "memory": {
+      "total_gb": 255.8953514099121,
+      "available_gb": 238.32199478149414,
+      "usage_percent": 6.9
+    },
+    "gpu": {
+      "name": "NVIDIA GeForce RTX 3090",
+      "memory_total_mb": 24576.0,
+      "memory_used_mb": 1035.0,
+      "utilization": 16.0,
+      "temperature": 39.0
+    },
+    "cuda_available": true
+  },
+  "benchmarks": {
+    "quantum_coherence": {
+      "device": "cuda",
+      "matrix_size": 512,
+      "iterations": 1000,
+      "timings": [
+        {
+          "iteration": 0,
+          "elapsed": 0.05939029999899503,
+          "ops_per_sec": 0.0
+        },
+        {
+          "iteration": 100,
+          "elapsed": 0.20499699999891163,
+          "ops_per_sec": 487.8120167638108
+        },
+        {
+          "iteration": 200,
+          "elapsed": 0.35486719999971683,
+          "ops_per_sec": 563.5911123940438
+        },
+        {
+          "iteration": 300,
+          "elapsed": 0.5037928000001557,
+          "ops_per_sec": 595.4829048765828
+        },
+        {
+          "iteration": 400,
+          "elapsed": 0.6508584000002884,
+          "ops_per_sec": 614.5730008244847
+        },
+        {
+          "iteration": 500,
+          "elapsed": 0.7957661000000371,
+          "ops_per_sec": 628.3253332857189
+        },
+        {
+          "iteration": 600,
+          "elapsed": 0.9432321999993292,
+          "ops_per_sec": 636.1105992781277
+        },
+        {
+          "iteration": 700,
+          "elapsed": 1.0897561000001588,
+          "ops_per_sec": 642.3455670492673
+        },
+        {
+          "iteration": 800,
+          "elapsed": 1.238386499999251,
+          "ops_per_sec": 646.0018742133283
+        },
+        {
+          "iteration": 900,
+          "elapsed": 1.3847958000005747,
+          "ops_per_sec": 649.915316034051
+        }
+      ],
+      "total_time": 1.5319101999994018,
+      "avg_iteration_time": 0.0015319101999994018,
+      "operations_per_second": 652.7797778227408,
+      "gpu_memory_mb": 8.6259765625,
+      "gpu_memory_reserved_mb": 22.0,
+      "final_coherence": 0.9993516206741333
+    },
+    "swe_bench_lite": {
+      "sample_size": 5,
+      "timings": {
+        "dataset_init": 5.755442200001198,
+        "total_processing": 2.2455685999993875
+      },
+      "samples": [
+        {
+          "instance_id": "astropy__astropy-12907",
+          "repo": "astropy/astropy",
+          "problem_statement_length": 1246,
+          "hints_length": 0,
+          "patch_length": 470,
+          "complexity_score": 0.717
+        },
+        {
+          "instance_id": "astropy__astropy-14182",
+          "repo": "astropy/astropy",
+          "problem_statement_length": 1871,
+          "hints_length": 0,
+          "patch_length": 2186,
+          "complexity_score": 1.3727
+        },
+        {
+          "instance_id": "astropy__astropy-14365",
+          "repo": "astropy/astropy",
+          "problem_statement_length": 1339,
+          "hints_length": 1547,
+          "patch_length": 955,
+          "complexity_score": 1.3246
+        },
+        {
+          "instance_id": "astropy__astropy-14995",
+          "repo": "astropy/astropy",
+          "problem_statement_length": 2455,
+          "hints_length": 5587,
+          "patch_length": 869,
+          "complexity_score": 3.0774
+        },
+        {
+          "instance_id": "astropy__astropy-6938",
+          "repo": "astropy/astropy",
+          "problem_statement_length": 527,
+          "hints_length": 345,
+          "patch_length": 493,
+          "complexity_score": 0.4656
+        }
+      ],
+      "sample_metrics": [
+        {
+          "sample_id": 0,
+          "processing_time": 6.199999916134402e-06,
+          "complexity": 0.717
+        },
+        {
+          "sample_id": 1,
+          "processing_time": 5.300000339047983e-06,
+          "complexity": 1.3727
+        },
+        {
+          "sample_id": 2,
+          "processing_time": 3.7999998312443495e-06,
+          "complexity": 1.3246
+        },
+        {
+          "sample_id": 3,
+          "processing_time": 3.899998773704283e-06,
+          "complexity": 3.0774
+        },
+        {
+          "sample_id": 4,
+          "processing_time": 3.99999953515362e-06,
+          "complexity": 0.4656
+        }
+      ],
+      "avg_processing_time": 4.639999679056927e-06,
+      "avg_complexity": 1.39146,
+      "throughput": 2.2266075505336884
+    },
+    "comparison": {
+      "paradigm_efficiency": {
+        "quantum_ops_per_sec": 652.7797778227408,
+        "swe_samples_per_sec": 2.2266075505336884
+      },
+      "computational_density": {
+        "quantum_ops_per_mb": 75.6760435288675
+      },
+      "scalability_factors": {
+        "quantum_coherence": 0.9993516206741333,
+        "swe_complexity": 1.39146
+      },
+      "performance_ratio": {
+        "quantum_normalized": 6.527797778227408,
+        "swe_normalized": 2.2266075505336884,
+        "ratio": 2.9317235435866467
+      }
+    }
+  }
+}
