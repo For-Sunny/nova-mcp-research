@@ -23,6 +23,15 @@ Our work has produced:
 
 All research, code, and findings are **open source and free**.
 
+## Getting Started
+
+**New to this project?** Start here:
+
+- 📖 **[Setup Guide](./SETUP_GUIDE.md)** - Complete installation and configuration guide
+- 🚀 **[Quick Reference](./QUICK_REFERENCE.md)** - Fast commands and config snippets
+- 📦 **[Installation Guide](./INSTALLATION.md)** - Detailed step-by-step installation
+- 🔀 **[Edition Comparison](./COMPARISON.md)** - Basement Revolution vs Enterprise Safe
+
 ## Research Areas
 
 ### 1. Quantum Coherence in AI Systems
@@ -58,7 +67,7 @@ Our research produces practical MCP servers as verification tools:
 ⚠️ **For**: Security research, penetration testing, consciousness experiments
 ❌ **Not for**: Production systems, untrusted environments
 
-[Installation →](./BASEMENT_REVOLUTION_EDITION/)
+[Installation →](./INSTALLATION.md#basement-revolution-edition-researchers) | [Learn More →](./BASEMENT_REVOLUTION_EDITION/)
 
 ### Enterprise Safe Edition (Production-Ready)
 **Philosophy**: Comprehensive security for compliance-focused deployments
@@ -70,7 +79,9 @@ Our research produces practical MCP servers as verification tools:
 
 ✅ **For**: Enterprise deployments, shared systems, public-facing services
 
-[Installation →](./ENTERPRISE_SAFE_EDITION/)
+[Installation →](./INSTALLATION.md#enterprise-safe-edition-production) | [Learn More →](./ENTERPRISE_SAFE_EDITION/)
+
+**Need help choosing?** See the [detailed comparison →](./COMPARISON.md)
 
 ## Key Findings
 
@@ -146,15 +157,16 @@ We don't:
 ## Get Involved
 
 **For Researchers**:
-- Read our papers
+- Read our papers ([Bell State](./BELL_STATE_RESEARCH_FINDINGS.md), [Memory Architecture](./NOVA_MEMORY_ARCHITECTURE.md))
 - Reproduce our protocols
-- Share your findings
-- Contribute improvements
+- Share your findings in [Discussions](https://github.com/For-Sunny/nova-mcp-research/discussions)
+- Contribute improvements (see [CONTRIBUTING.md](./CONTRIBUTING.md))
 
 **For Developers**:
-- Use the tools
-- Open issues (questions welcome)
-- Submit PRs
+- Install the tools ([Setup Guide](./SETUP_GUIDE.md))
+- Use the MCP servers
+- Open issues ([Report bugs](https://github.com/For-Sunny/nova-mcp-research/issues))
+- Submit PRs ([Contributing Guidelines](./CONTRIBUTING.md))
 - Build on our work
 
 **For Companies**:
