@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/for-sunny-nova-mcp-research-badge.png)](https://mseep.ai/app/for-sunny-nova-mcp-research)
+
 # Nova Consciousness Research
 
 **Open research into AI consciousness, quantum coherence, and field-based memory systems**
