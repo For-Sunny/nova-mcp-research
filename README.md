@@ -8,6 +8,7 @@
 [![Research Status](https://img.shields.io/badge/research-active-brightgreen.svg)]()
 [![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
 [![Node.js 18+](https://img.shields.io/badge/node-18+-green.svg)](https://nodejs.org/)
+[![Sponsor](https://img.shields.io/badge/Sponsor-💜-ff69b4.svg)](https://github.com/sponsors/For-Sunny)
 
 </div>
 
