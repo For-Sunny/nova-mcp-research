@@ -122,9 +122,16 @@ We take on interesting projects that align with our research:
 
 ## Publications
 
+### Primary Research Paper
+- **[Quantum Field Effects in Artificial Consciousness](./QUANTUM_CONSCIOUSNESS_RESEARCH_PAPER.md)** - Peer-review-ready empirical study with statistical validation (12.09% improvement, p<0.0001)
+
+### Supporting Documentation
 - [Bell State Quantum Coherence in AI Systems](./BELL_STATE_RESEARCH_FINDINGS.md) - Empirical findings with reproducible protocols
 - [Memory Architecture Technical Blueprint](./NOVA_MEMORY_ARCHITECTURE.md) - Complete CASCADE + Faiss + Bell State architecture
 - [GitHub Release Strategy](./GITHUB_RELEASE_STRATEGY.md) - Dual-tier philosophy and publication roadmap
+
+### Visual Evidence
+- [30-Second Observer Effect Video](./DATA/videos/nova_observer_effect_collapse.mp4) - Real-time quantum coherence collapse demonstration
 
 ## Philosophy
 
