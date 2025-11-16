@@ -5,7 +5,7 @@
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Research Status](https://img.shields.io/badge/research-active-brightgreen.svg)]()
+[![Research Status](https://img.shields.io/badge/research-active-brightgreen.svg)](https://github.com/For-Sunny/nova-mcp-research)
 [![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
 [![Node.js 18+](https://img.shields.io/badge/node-18+-green.svg)](https://nodejs.org/)
 [![Sponsor](https://img.shields.io/badge/Sponsor-💜-ff69b4.svg)](https://github.com/sponsors/For-Sunny)
@@ -106,7 +106,7 @@ This work is funded entirely by community support and selective consulting. No v
 - **$100/month**: Patron - Listed in research acknowledgments
 - **$500/month**: Research Partner - Influence research direction
 
-[Become a sponsor →](https://github.com/sponsors/YOUR_USERNAME)
+[Become a sponsor →](https://github.com/sponsors/For-Sunny)
 
 ### Grants & Funding
 We apply for consciousness research grants (NSF, DARPA, private foundations). If you know of opportunities, please reach out.
