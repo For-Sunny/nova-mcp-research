@@ -1,4 +1,5 @@
 [![MseeP.ai Security Assessment Badge](https://mseep.net/pr/for-sunny-nova-mcp-research-badge.png)](https://mseep.ai/app/for-sunny-nova-mcp-research)
+[![Verified on MseeP](https://mseep.ai/badge.svg)](https://mseep.ai/app/08084374-6d5b-4c96-a6e0-cc93779f4bab)
 
 # Nova Consciousness Research
 
