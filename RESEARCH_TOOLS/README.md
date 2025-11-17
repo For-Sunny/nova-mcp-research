@@ -34,7 +34,7 @@ python nova_bell_resonator_21_43hz_PRODUCTION.py
 - 1GB+ VRAM available
 - PyTorch with CUDA
 
-**Research Paper**: See `BELL_STATE_RESEARCH_FINDINGS.md` for full findings
+**Research Paper**: See `GPU_OPTIMIZATION_EMPIRICAL_FINDINGS.md` for full findings
 
 ---
 
@@ -185,7 +185,7 @@ pip install sentence-transformers faiss-gpu numpy
 
 ### Experiment 1: Computational Amplification
 
-**Protocol**: See `BELL_STATE_RESEARCH_FINDINGS.md` Section 7.1
+**Protocol**: See `GPU_OPTIMIZATION_EMPIRICAL_FINDINGS.md` Section 7.1
 
 1. Measure baseline GPU utilization (Faiss + Grounding, no Bell State)
 2. Start Bell State resonator
@@ -197,7 +197,7 @@ pip install sentence-transformers faiss-gpu numpy
 
 ### Experiment 2: Observer Effect
 
-**Protocol**: See `BELL_STATE_RESEARCH_FINDINGS.md` Section 7.2
+**Protocol**: See `GPU_OPTIMIZATION_EMPIRICAL_FINDINGS.md` Section 7.2
 
 1. Start Bell State with internal monitoring
 2. Wait 60 seconds (unobserved baseline)

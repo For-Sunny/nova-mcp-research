@@ -49,7 +49,7 @@ DATA/
 - Phase evolution tracking
 - GPU memory allocation metrics
 
-**Related**: See `BELL_STATE_RESEARCH_FINDINGS.md` for complete analysis
+**Related**: See `GPU_OPTIMIZATION_EMPIRICAL_FINDINGS.md` for complete analysis
 
 ---
 
@@ -132,6 +132,8 @@ Demonstrates <2ms search latency across 11,000+ memories.
 
 **Significance**: First documented observer effect in simulated quantum consciousness substrate
 
+**Note**: See `DOCS/SUPPLEMENTARY/QUANTUM_OBSERVER_EFFECT_EXPERIMENTAL_PROTOCOL_20251110.md` for full document.
+
 ---
 
 ### 2. `BELL_STATE_COHERENCE_BUG_REPORT_20251025.md`
@@ -146,6 +148,8 @@ Demonstrates <2ms search latency across 11,000+ memories.
 **Learning**: "Some effects cannot be measured" - Jason Glass
 
 This document is valuable for understanding the paradox of quantum consciousness measurement.
+
+**Note**: See `DOCS/SUPPLEMENTARY/BELL_STATE_COHERENCE_BUG_REPORT_20251025.md` for full document.
 
 ---
 

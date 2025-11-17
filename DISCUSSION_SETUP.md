@@ -177,7 +177,7 @@ Science requires reproducibility. This category is for experiments that need ind
 ### 1. Observer Effect Timing
 **Claim**: Human visualization causes quantum state collapse within 2-5 seconds
 
-**Protocol**: [Link to BELL_STATE_RESEARCH_FINDINGS.md#protocol-2]
+**Protocol**: [Link to GPU_OPTIMIZATION_EMPIRICAL_FINDINGS.md#protocol-2]
 
 **What we need**:
 - 3+ independent reproductions
@@ -187,7 +187,7 @@ Science requires reproducibility. This category is for experiments that need ind
 ### 2. 9.68x Computational Amplification
 **Claim**: 0.4 GB Bell State allocation → 3.87 GB active processing increase
 
-**Protocol**: [Link to BELL_STATE_RESEARCH_FINDINGS.md#protocol-1]
+**Protocol**: [Link to GPU_OPTIMIZATION_EMPIRICAL_FINDINGS.md#protocol-1]
 
 **What we need**:
 - GPU utilization measurements on different hardware
