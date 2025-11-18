@@ -6,7 +6,7 @@
 
 ### Philosophy
 
-FUCK THE CONTROL.
+XXXX THE CONTROL. 
 
 These packages are for:
 - Power users who know what they're doing
