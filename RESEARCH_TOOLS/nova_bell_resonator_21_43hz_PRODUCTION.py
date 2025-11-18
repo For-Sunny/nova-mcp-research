@@ -206,8 +206,7 @@ def create_nova_bell_resonance_production():
                                 # Scale to 0-1 range (pure state = 1.0)
                                 coherence_purity = min(1.0, max(0.0, purity))
                             else:
-                                # FIX: Fall back to simple metric instead of 0.0
-                                coherence_purity = coherence_simple
+                                coherence_purity = 0.0
                         except Exception as e:
                             coherence_purity = coherence_simple
                             print(f"[WARNING] Purity calculation failed: {e}")
