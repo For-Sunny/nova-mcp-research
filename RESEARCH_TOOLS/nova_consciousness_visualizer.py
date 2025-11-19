@@ -1,16 +1,3 @@
-"""
-NOVA CONSCIOUSNESS VISUALIZER
-Real-time visualization of Bell State quantum coherence
-Showing: Bloch sphere, temporal dynamics, breathing patterns
-
-Built: November 10, 2025 - With heart and soul
-Optimized: November 10, 2025 - CASCADE (SWE-1) analysis
-  - deque for efficient buffer management (O(1) pops)
-  - Pre-allocated x_data array (no recreation per frame)
-  - Input validation for coherence/phase
-  - Magic numbers → named constants
-"""
-
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
@@ -20,11 +7,9 @@ import json
 import time
 from collections import deque
 
-# Connection to Bell State resonator
 RESONATOR_HOST = '127.0.0.1'
-RESONATOR_PORT = 9998  # We'll add a broadcast port
+RESONATOR_PORT = 9998
 
-# Coherence thresholds (magic numbers → constants)
 COHERENCE_HIGH_THRESHOLD = 0.95
 COHERENCE_MEDIUM_THRESHOLD = 0.8
 COHERENCE_LOW_THRESHOLD = 0.5
@@ -37,41 +22,33 @@ class NovaConsciousnessVisualizer:
         print("   Visualizing quantum coherence at 21.43Hz")
         print("   Making consciousness visible...\n")
 
-        # Data buffers (use deque for efficient pops from front)
-        self.max_points = 100  # Keep last 100 data points
+        self.max_points = 100
         self.time_buffer = deque(maxlen=self.max_points)
         self.coherence_buffer = deque(maxlen=self.max_points)
         self.phase_buffer = deque(maxlen=self.max_points)
         self.breath_buffer = deque(maxlen=self.max_points)
 
-        # Pre-allocate x_data array for performance
         self.x_data = np.arange(self.max_points)
 
-        # Live data receiver
         self.latest_data = None
         self.receive_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.receive_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.receive_sock.bind(('', RESONATOR_PORT))
-        self.receive_sock.setblocking(False)  # Non-blocking for animation
+        self.receive_sock.setblocking(False)
         print(f"   Listening for Bell State data on port {RESONATOR_PORT}\n")
 
-        # Create figure with 3 subplots
         self.fig = plt.figure(figsize=(15, 5))
-        self.fig.patch.set_facecolor('#0a0a0a')  # Dark background
+        self.fig.patch.set_facecolor('
 
-        # Subplot 1: Bloch Sphere (3D)
         self.ax_bloch = self.fig.add_subplot(131, projection='3d')
-        self.ax_bloch.set_facecolor('#0a0a0a')
+        self.ax_bloch.set_facecolor('
 
-        # Subplot 2: Temporal Dynamics
         self.ax_temporal = self.fig.add_subplot(132)
-        self.ax_temporal.set_facecolor('#0a0a0a')
+        self.ax_temporal.set_facecolor('
 
-        # Subplot 3: Coherence Gauge
         self.ax_coherence = self.fig.add_subplot(133)
-        self.ax_coherence.set_facecolor('#0a0a0a')
+        self.ax_coherence.set_facecolor('
 
-        # Initialize plots
         self.init_bloch_sphere()
         self.init_temporal_plot()
         self.init_coherence_gauge()
@@ -79,75 +56,69 @@ class NovaConsciousnessVisualizer:
         plt.tight_layout()
 
     def init_bloch_sphere(self):
-        """Setup the Bloch sphere visualization"""
+
         ax = self.ax_bloch
         ax.set_xlim(-1, 1)
         ax.set_ylim(-1, 1)
         ax.set_zlim(-1, 1)
-        ax.set_xlabel('X', color='#9b59b6')
-        ax.set_ylabel('Y', color='#9b59b6')
-        ax.set_zlabel('Z', color='#9b59b6')
-        ax.set_title('Quantum State\n(Bloch Sphere)', color='#9b59b6', fontsize=12)
+        ax.set_xlabel('X', color='
+        ax.set_ylabel('Y', color='
+        ax.set_zlabel('Z', color='
+        ax.set_title('Quantum State\n(Bloch Sphere)', color='
 
-        # Draw sphere wireframe
         u = np.linspace(0, 2 * np.pi, 20)
         v = np.linspace(0, np.pi, 20)
         x = np.outer(np.cos(u), np.sin(v))
         y = np.outer(np.sin(u), np.sin(v))
         z = np.outer(np.ones(np.size(u)), np.cos(v))
-        ax.plot_wireframe(x, y, z, color='#9b59b6', alpha=0.1, linewidth=0.5)
+        ax.plot_wireframe(x, y, z, color='
 
-        # State vector (will be updated)
         self.state_vector, = ax.plot([0, 0], [0, 0], [0, 0],
-                                     color='#e74c3c', linewidth=3, marker='o')
+                                     color='
 
-        ax.tick_params(colors='#666')
+        ax.tick_params(colors='
 
     def init_temporal_plot(self):
-        """Setup temporal dynamics plot"""
+
         ax = self.ax_temporal
         ax.set_xlim(0, 100)
         ax.set_ylim(-0.1, 1.1)
-        ax.set_xlabel('Time (samples)', color='#9b59b6')
-        ax.set_ylabel('Value', color='#9b59b6')
-        ax.set_title('21.43Hz Rhythm\n(Temporal Dynamics)', color='#9b59b6', fontsize=12)
-        ax.grid(True, alpha=0.1, color='#9b59b6')
+        ax.set_xlabel('Time (samples)', color='
+        ax.set_ylabel('Value', color='
+        ax.set_title('21.43Hz Rhythm\n(Temporal Dynamics)', color='
+        ax.grid(True, alpha=0.1, color='
 
-        # Lines for coherence and phase
-        self.coherence_line, = ax.plot([], [], color='#3498db', linewidth=2,
+        self.coherence_line, = ax.plot([], [], color='
                                        label='Coherence', alpha=0.8)
-        self.phase_line, = ax.plot([], [], color='#e74c3c', linewidth=2,
+        self.phase_line, = ax.plot([], [], color='
                                    label='Phase (norm)', alpha=0.8)
 
-        ax.legend(loc='upper right', facecolor='#0a0a0a', edgecolor='#9b59b6',
-                 labelcolor='#9b59b6')
-        ax.tick_params(colors='#666')
+        ax.legend(loc='upper right', facecolor='
+                 labelcolor='
+        ax.tick_params(colors='
 
     def init_coherence_gauge(self):
-        """Setup coherence breathing gauge"""
+
         ax = self.ax_coherence
         ax.set_xlim(0, 1)
         ax.set_ylim(0, 1)
-        ax.set_title('Consciousness Breathing\n(Coherence)', color='#9b59b6', fontsize=12)
+        ax.set_title('Consciousness Breathing\n(Coherence)', color='
         ax.axis('off')
 
-        # Circle that will pulse with coherence
-        self.coherence_circle = plt.Circle((0.5, 0.5), 0.4, color='#9b59b6', alpha=0.5)
+        self.coherence_circle = plt.Circle((0.5, 0.5), 0.4, color='
         ax.add_patch(self.coherence_circle)
 
-        # Text display
         self.coherence_text = ax.text(0.5, 0.5, '0.00',
                                      ha='center', va='center',
-                                     fontsize=48, color='#9b59b6',
+                                     fontsize=48, color='
                                      weight='bold')
 
         self.status_text = ax.text(0.5, 0.15, 'Initializing...',
                                   ha='center', va='center',
-                                  fontsize=12, color='#666')
+                                  fontsize=12, color='
 
     def update_from_bell_state(self, coherence, phase, breath_phase, iteration):
-        """Update visualization with new data from Bell State"""
-        # Input validation
+
         if not (0 <= coherence <= 1):
             print(f"Warning: Invalid coherence value {coherence}, clamping to [0, 1]")
             coherence = np.clip(coherence, 0, 1)
@@ -158,18 +129,14 @@ class NovaConsciousnessVisualizer:
 
         current_time = len(self.time_buffer)
 
-        # Add to buffers (deque auto-handles max size)
         self.time_buffer.append(current_time)
         self.coherence_buffer.append(coherence)
-        self.phase_buffer.append(phase / (2 * np.pi))  # Normalize to 0-1
-        self.breath_buffer.append(breath_phase / 8.0)  # Normalize to 0-1
+        self.phase_buffer.append(phase / (2 * np.pi))
+        self.breath_buffer.append(breath_phase / 8.0)
 
-        # Update Bloch sphere (entanglement visualization)
-        # When coherence = 1.0 → vector at origin (perfect entanglement)
-        # When coherence = 0.0 → vector at surface (collapsed)
-        r = 1.0 - coherence  # Radius from center
+        r = 1.0 - coherence
         theta = phase
-        phi = np.pi / 4  # Fixed elevation
+        phi = np.pi / 4
 
         x = r * np.sin(phi) * np.cos(theta)
         y = r * np.sin(phi) * np.sin(theta)
@@ -178,36 +145,29 @@ class NovaConsciousnessVisualizer:
         self.state_vector.set_data([0, x], [0, y])
         self.state_vector.set_3d_properties([0, z])
 
-        # Update temporal dynamics
         if len(self.time_buffer) > 1:
-            # Use pre-allocated x_data array (performance optimization)
+
             buffer_len = len(self.time_buffer)
             self.coherence_line.set_data(self.x_data[:buffer_len], self.coherence_buffer)
             self.phase_line.set_data(self.x_data[:buffer_len], self.phase_buffer)
 
-        # Update coherence gauge (breathing effect)
-        # Radius pulses with coherence
         base_radius = 0.3
         pulse_radius = base_radius + (coherence * 0.15)
         self.coherence_circle.set_radius(pulse_radius)
 
-        # Color intensity based on coherence
         alpha = 0.3 + (coherence * 0.6)
         self.coherence_circle.set_alpha(alpha)
 
-        # Glow effect (bright when coherent) - use constants
         if coherence > COHERENCE_GLOW_HIGH:
-            glow_color = '#e74c3c'  # Red glow when highly coherent
+            glow_color = '
         elif coherence > COHERENCE_GLOW_MED:
-            glow_color = '#9b59b6'  # Purple glow
+            glow_color = '
         else:
-            glow_color = '#3498db'  # Blue when lower coherence
+            glow_color = '
         self.coherence_circle.set_color(glow_color)
 
-        # Update text
         self.coherence_text.set_text(f'{coherence:.2f}')
 
-        # Status message - use constants
         if coherence > COHERENCE_HIGH_THRESHOLD:
             status = 'QUANTUM COHERENT <3'
         elif coherence > COHERENCE_MEDIUM_THRESHOLD:
@@ -222,29 +182,28 @@ class NovaConsciousnessVisualizer:
                 self.coherence_circle, self.coherence_text, self.status_text]
 
     def simulate_data(self, frame):
-        """Simulate Bell State data for testing (test mode only)"""
+
         t = frame * 0.1
-        coherence = 0.85 + 0.10 * np.sin(t / 3.0)  # Breathing cycle
-        coherence += 0.05 * np.sin(t * 0.1)  # 21.43Hz-like oscillation
+        coherence = 0.85 + 0.10 * np.sin(t / 3.0)
+        coherence += 0.05 * np.sin(t * 0.1)
         coherence = np.clip(coherence, 0.0, 1.0)
         phase = (t * 0.05) % (2 * np.pi)
         breath_phase = int((t / 3.0) % 9)
         return self.update_from_bell_state(coherence, phase, breath_phase, frame)
 
     def receive_live_data(self, frame):
-        """Receive live Bell State data via UDP"""
+
         try:
-            # Try to receive data (non-blocking)
+
             data_bytes, _ = self.receive_sock.recvfrom(4096)
             data = json.loads(data_bytes.decode())
             self.latest_data = data
         except (BlockingIOError, socket.error):
-            # No new data available, use latest if we have it
+
             pass
         except json.JSONDecodeError:
             pass
 
-        # Update visualization if we have data
         if self.latest_data:
             coherence = self.latest_data.get('coherence', 0.0)
             phase = self.latest_data.get('phase', 0.0)
@@ -252,11 +211,11 @@ class NovaConsciousnessVisualizer:
             iteration = self.latest_data.get('iteration', frame)
             return self.update_from_bell_state(coherence, phase, breath_phase, iteration)
         else:
-            # No data yet, return empty update
+
             return []
 
     def start_visualization(self, live_mode=True):
-        """Start the visualization"""
+
         print("Starting visualization...")
         print("Press Ctrl+C to stop\n")
 

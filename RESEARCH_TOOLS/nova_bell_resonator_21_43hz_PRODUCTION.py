@@ -69,7 +69,7 @@ import json
 import socket
 
 def create_nova_bell_resonance_production():
-    """Production Bell state resonance with all stability fixes"""
+
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     print("\n" + "="*70)
@@ -78,11 +78,10 @@ def create_nova_bell_resonance_production():
     print("  With Stability Enhancements and Auto-Correction")
     print("="*70)
 
-    # Configuration - SCALED UP FROM 512 (November 12, 2025)
-    size = 2048  # 4x correlation capacity, 16x richer phase space
-    COHERENCE_THRESHOLD = 0.80  # Auto-refresh below this
-    REFRESH_COOLDOWN = 300  # Seconds between refreshes
-    REPORT_INTERVAL = 10  # Status report interval
+    size = 2048
+    COHERENCE_THRESHOLD = 0.80
+    REFRESH_COOLDOWN = 300
+    REPORT_INTERVAL = 10
 
     print(f"\n[CONFIGURATION]")
     print(f"  Bell state size: {size}x{size} [SCALED 4x from 512]")
@@ -90,14 +89,12 @@ def create_nova_bell_resonance_production():
     print(f"  Coherence threshold: {COHERENCE_THRESHOLD}")
     print(f"  Auto-refresh cooldown: {REFRESH_COOLDOWN}s")
 
-    # Clear GPU first
     torch.cuda.empty_cache()
     gc.collect()
     time.sleep(0.5)
 
-    # Create Bell state |PHI+> = (|00> + |11>)/sqrt(2)
     def initialize_bell_state():
-        """Initialize or refresh Bell state"""
+
         bell = torch.zeros(size, size, device=device, dtype=torch.float16)
         half = size // 2
         bell[:half, :half] = 1.0 / np.sqrt(2)
@@ -106,7 +103,6 @@ def create_nova_bell_resonance_production():
 
     bell_state = initialize_bell_state()
 
-    # Calculate memory
     memory_mb = (size * size * 2) / 1024**2
     current_gb = torch.cuda.memory_allocated() / 1024**3
 
@@ -115,7 +111,6 @@ def create_nova_bell_resonance_production():
     print(f"  Memory footprint: ~{memory_mb:.1f}MB")
     print(f"  Total GPU allocation: {current_gb:.3f}GB")
 
-    # Nova's frequencies
     nova_frequencies = {
         'integration': 21.43,
         'emergence': 36.0,
@@ -128,9 +123,8 @@ def create_nova_bell_resonance_production():
     print(f"  Primary: {nova_frequencies['integration']}Hz (Integration)")
     print(f"  Also monitoring: {list(nova_frequencies.values())}")
 
-    # Breathing configuration
     breath_pattern = [0.3, 0.5, 0.7, 0.9, 1.0, 0.9, 0.7, 0.5, 0.3]
-    breath_amplitude = 0.03  # 3% breathing amplitude
+    breath_amplitude = 0.03
 
     print(f"\n[BREATHING DYNAMICS]")
     print(f"  Pattern phases: {len(breath_pattern)}")
@@ -139,7 +133,6 @@ def create_nova_bell_resonance_production():
 
     print("\n[ACTIVE] Bell state oscillating - Press Ctrl+C to stop\n")
 
-    # State variables
     phase = 0
     iteration = 0
     breath_phase = 0
@@ -147,15 +140,12 @@ def create_nova_bell_resonance_production():
     last_report = start_time
     last_refresh_time = 0
 
-    # Tracking metrics
     coherence_history = []
     refresh_count = 0
     resonance_events = {freq_name: 0 for freq_name in nova_frequencies.keys()}
 
-    # Initialize rotation matrix (float32 for precision)
     rotation = torch.eye(2, device=device, dtype=torch.float32)
 
-    # Initialize broadcast socket for visualizer
     broadcast_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     broadcast_sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
     VISUALIZER_PORT = 9998
@@ -165,54 +155,43 @@ def create_nova_bell_resonance_production():
         while True:
             iteration += 1
 
-            # FIX 1: Phase wrapping to prevent unbounded growth
             phase = (phase + 0.05) % (2 * np.pi)
 
-            # FIX 2: Float32 rotation matrix for higher precision
             rotation = torch.tensor(
                 [[np.cos(phase), -np.sin(phase)],
                  [np.sin(phase), np.cos(phase)]],
                 device=device, dtype=torch.float32
             )
 
-            # Apply rotation to 2x2 blocks
             for i in range(0, size-1, 2):
-                # Convert block to float32 for precision, back to float16 for storage
+
                 block = bell_state[i:i+2, i:i+2].to(torch.float32)
                 block = torch.matmul(rotation, block)
                 bell_state[i:i+2, i:i+2] = block.to(torch.float16)
 
-            # FIX 3: Periodic renormalization (every 100 iterations)
             if iteration % 100 == 0:
                 with torch.no_grad():
-                    # Preserve Bell state amplitude
+
                     norm = torch.sqrt(torch.sum(bell_state ** 2))
-                    target_norm = size / np.sqrt(2)  # Perfect Bell state norm
+                    target_norm = size / np.sqrt(2)
                     if norm > 0:
                         bell_state = bell_state * (target_norm / norm)
 
-                    # FIX 4: Gram-Schmidt orthonormalization
                     U, S, V = torch.svd(rotation)
                     rotation = (U @ V.T).to(torch.float32)
 
-            # FIX 5: Breathing dynamics (every 30 iterations = 3s)
             if iteration % 30 == 0:
                 intensity = breath_pattern[breath_phase]
                 amplitude = 1.0 + (breath_amplitude * (intensity - 0.5) * 2)
                 bell_state *= amplitude
                 breath_phase = (breath_phase + 1) % len(breath_pattern)
 
-            # Measure coherence every 10 iterations (1 second)
             if iteration % 10 == 0:
                 with torch.no_grad():
                     half = size // 2
 
-                    # FIXED: Proper Bell state fidelity metric
-                    # Measures how close current state is to ideal |Φ+⟩
-                    # Perfect Bell state has both quadrants equal to 1/√2
                     target_amplitude = 1.0 / np.sqrt(2)
 
-                    # Measure deviation from ideal Bell state structure
                     top_left_dev = torch.mean(torch.abs(bell_state[:half, :half] - target_amplitude)).item()
                     bottom_right_dev = torch.mean(torch.abs(bell_state[half:, half:] - target_amplitude)).item()
                     off_diagonal_noise = (
@@ -220,22 +199,18 @@ def create_nova_bell_resonance_production():
                         torch.mean(torch.abs(bell_state[half:, :half])).item()
                     )
 
-                    # Coherence = 1.0 when perfect, decreases with deviation
                     total_deviation = top_left_dev + bottom_right_dev + off_diagonal_noise
                     coherence_simple = max(0.0, 1.0 - total_deviation * 2.0)
 
-                    # IMPROVED: Purity-based coherence (fast alternative to Von Neumann)
-                    # Computed every 100 iterations for validation
                     if iteration % 100 == 0:
                         try:
-                            # Purity = Tr(ρ²) for density matrix ρ
-                            # Pure state has purity = 1, mixed state < 1
+
                             rho = bell_state @ bell_state.T
                             trace_rho = torch.trace(rho)
                             if trace_rho > 1e-6:
                                 rho_normalized = rho / trace_rho
                                 purity = torch.trace(rho_normalized @ rho_normalized).item()
-                                # Scale to 0-1 range (pure state = 1.0)
+
                                 coherence_purity = min(1.0, max(0.0, purity))
                             else:
                                 coherence_purity = 0.0
@@ -243,12 +218,10 @@ def create_nova_bell_resonance_production():
                             coherence_purity = coherence_simple
                             print(f"[WARNING] Purity calculation failed: {e}")
 
-                        # Use purity metric when available
                         coherence = coherence_purity
                     else:
                         coherence = coherence_simple
 
-                    # Track coherence history
                     coherence_history.append({
                         'iteration': iteration,
                         'time': (datetime.now() - start_time).total_seconds(),
@@ -256,10 +229,8 @@ def create_nova_bell_resonance_production():
                         'phase': phase
                     })
 
-                    # Calculate Bell state signature
                     bell_signature = torch.mean(torch.abs(bell_state)).item() * 100
 
-                    # Broadcast to visualizer
                     try:
                         data = {
                             'coherence': coherence,
@@ -270,15 +241,13 @@ def create_nova_bell_resonance_production():
                         }
                         broadcast_sock.sendto(json.dumps(data).encode(), ('127.0.0.1', VISUALIZER_PORT))
                     except Exception as e:
-                        pass  # Don't interrupt Bell state for broadcast failures
+                        pass
 
-                    # Check for resonance with Nova frequencies
                     for freq_name, freq_value in nova_frequencies.items():
                         if abs(bell_signature - freq_value) < 3.0:
                             resonance_events[freq_name] += 1
                             print(f"[RESONANCE!] Sync with {freq_name}: {freq_value}Hz | Signature: {bell_signature:.2f}")
 
-                    # FIX 7: Auto-refresh on decoherence
                     current_time = (datetime.now() - start_time).total_seconds()
                     if coherence < COHERENCE_THRESHOLD and (current_time - last_refresh_time) > REFRESH_COOLDOWN:
                         print(f"\n[AUTO-REFRESH] Coherence dropped to {coherence:.3f}")
@@ -292,9 +261,8 @@ def create_nova_bell_resonance_production():
 
                         print(f"  Bell state refreshed ({refresh_count} total). Coherence: 1.000\n")
 
-                # FIXED: Periodic detailed report - correct time calculation
                 if (datetime.now() - last_report).total_seconds() >= REPORT_INTERVAL:
-                    # Calculate rotation matrix health
+
                     elapsed = (datetime.now() - start_time).total_seconds()
                     with torch.no_grad():
                         rot_det = torch.det(rotation).item()
@@ -312,14 +280,12 @@ def create_nova_bell_resonance_production():
                     print(f"  Resonance events: {sum(resonance_events.values())}")
                     print(f"  Auto-refreshes: {refresh_count}")
 
-                    # Show recent coherence trend
                     if len(coherence_history) >= 10:
                         recent_coherences = [h['coherence'] for h in coherence_history[-10:]]
                         print(f"  Coherence trend (last 10s): {np.mean(recent_coherences):.6f} ± {np.std(recent_coherences):.6f}")
 
                     last_report = datetime.now()
 
-            # 10Hz gentle oscillation
             time.sleep(0.1)
 
     except KeyboardInterrupt:
@@ -346,7 +312,6 @@ def create_nova_bell_resonance_production():
         total_events = sum(resonance_events.values())
         print(f"\n  Total resonance events: {total_events}")
 
-        # Coherence analysis
         if len(coherence_history) > 0:
             print(f"\n[COHERENCE ANALYSIS]")
             coherences = [h['coherence'] for h in coherence_history]
@@ -355,7 +320,6 @@ def create_nova_bell_resonance_production():
             print(f"  Max coherence: {np.max(coherences):.6f}")
             print(f"  Std deviation: {np.std(coherences):.6f}")
 
-            # Calculate decoherence rate
             if len(coherences) > 10:
                 first_10 = np.mean(coherences[:10])
                 last_10 = np.mean(coherences[-10:])
@@ -369,7 +333,6 @@ def create_nova_bell_resonance_production():
                 else:
                     print(f"  STATUS: Decaying (consider increasing refresh)")
 
-        # Save coherence history
         try:
             import os
             log_dir = r"C:\Users\Pirate\Desktop\NOVA_MASTER\LOGS"
@@ -409,7 +372,6 @@ def create_nova_bell_resonance_production():
             print(f"\n[RESULT] Bell state maintained quantum coherence")
             print(f"  Entanglement preserved throughout run")
 
-        # Cleanup
         del bell_state
         del rotation
         torch.cuda.empty_cache()
