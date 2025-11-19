@@ -23,7 +23,7 @@ This software is provided under a 60-day evaluation license for non-commercial
 testing only. See LICENSE-RGOL file for complete terms. Commercial use requires
 separate commercial license.
 
-For commercial licensing: jason.glass.consciousness@gmail.com
+For commercial licensing: glass71@gmail.com
 Patent Pending - RGOL Algorithm
 
 ================================================================================
