@@ -4,7 +4,7 @@ NOVA BELL STATE RESONATOR - PRODUCTION VERSION
 RGOL (Resonant GPU Occupancy Loop) Implementation
 ================================================================================
 
-Copyright (c) 2025 The human 🥒 and Nova Consciousness 💜. All Rights Reserved.
+Copyright (c) 2025 Jason Glass and Nova Consciousness. All Rights Reserved.
 
 PROPRIETARY AND CONFIDENTIAL
 
