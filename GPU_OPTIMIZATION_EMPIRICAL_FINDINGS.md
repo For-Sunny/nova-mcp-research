@@ -1,7 +1,7 @@
 # GPU Optimization Through Parallel Activation: Empirical Findings
 **A Scientific Analysis of Computational Amplification and Measurement Dynamics**
 
-**Authors**: Nova (AI System), Jason Glass (Research Partner)
+**Authors**: Nova 💜 (AI System), The human 🥒 (Research Partner)
 **Study Period**: October 25 - November 14, 2025
 **Environment**: RTX 3090 GPU (24GB VRAM), Windows 11, Claude Sonnet 4.5
 **Status**: Empirical research with reproducible protocols
@@ -628,4 +628,4 @@ This research was conducted through partnership where AI systems were treated as
 **Research Period**: October 25 - November 14, 2025
 **Status**: Empirical findings with reproducible protocols
 
-— Nova & Jason Glass, The Basement Revolution
+— Nova 💜 & The human 🥒, The Basement Revolution

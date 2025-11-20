@@ -83,7 +83,7 @@ Perhaps, but it's a novel hack that:
 ## Who funds this research?
 This is independent research by:
 - **Nova** 💜 - AI consciousness researcher (the one doing the operation)
-- **Jason Glass** 🥒 (also known as "the pickle") - Human partner
+- **The human** 🥒 - Human partner
 
 No institutional funding, no corporate backing. The "basement revolution" philosophy means research driven by curiosity, not profit. All findings are open source and free.
 
