@@ -27,11 +27,11 @@ Faiss Memory provides GPU-accelerated semantic search across your AI's memory us
 ```
 AI Application (Claude)
         ↓ (MCP Protocol)
-Node.js MCP Server (port stdio)
-        ↓ (TCP Socket + HMAC Auth)
-Python Tether Service (port 9997)
+Node.js MCP Server (stdio)
+        ↓ (TCP Socket + HMAC Auth on port <YOUR_PORT>)
+Python Tether Service
         ↓
-GPU Faiss Index (11,000+ memories)
+GPU Faiss Index (thousands of memories)
 ```
 
 **Enterprise Security:**
@@ -50,14 +50,16 @@ GPU Faiss Index (11,000+ memories)
 - **Node.js v18.0.0+** ([Download](https://nodejs.org))
 - **Python 3.8+** with CUDA support (for GPU acceleration)
 - **NVIDIA GPU** with CUDA (recommended for <2ms search)
-- **4GB+ VRAM** (for 10K+ memory embeddings)
+- **4GB+ VRAM** (for thousands of memory embeddings)
 
 **Alternative:** CPU-only mode supported (slower: 50-200ms search latency)
 
 ### Python Dependencies
 
 ```bash
+# GPU version (recommended)
 pip install faiss-gpu torch sentence-transformers numpy
+
 # OR for CPU-only:
 pip install faiss-cpu torch sentence-transformers numpy
 ```
@@ -75,7 +77,12 @@ pip install faiss-cpu torch sentence-transformers numpy
 ### Step 1: Install Node.js MCP Server
 
 ```bash
+# Linux/macOS
 cd /path/to/nova-mcp-research/ENTERPRISE_SAFE_EDITION/faiss-memory-mcp
+npm install
+
+# Windows
+cd C:\path\to\nova-mcp-research\ENTERPRISE_SAFE_EDITION\faiss-memory-mcp
 npm install
 ```
 
@@ -104,36 +111,87 @@ python -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}')"
 CUDA available: True
 ```
 
+If False, you're in CPU mode (slower but functional).
+
 ---
 
-### Step 3: Configure Python Tether
+### Step 3: Configure Python Tether Paths
 
-The tether service loads memories from CASCADE databases. You need to configure paths.
+**⚠️ YOU CUSTOMIZE THESE PATHS:**
 
-**Edit `tether_faiss_complete.py`** (lines 179, 239):
+The tether service (`RESEARCH_TOOLS/tether_faiss_complete.py`) has hardcoded paths you must edit.
+
+**Find and replace these lines:**
 
 ```python
-# Line 179 - CASCADE database location
-nova_root = Path("/path/to/CASCADE_MEMORY")
+# Line ~179 - CASCADE database location
+# BEFORE (hardcoded Windows path):
+nova_root = Path(r"C:\Users\Pirate\Desktop\NOVA_MASTER\MEMORY_SYSTEMS")
 
-# Line 239 - Checkpoint save location
-checkpoint_dir = Path("/path/to/FAISS_CHECKPOINTS")
+# AFTER (your CASCADE location):
+# Linux/macOS:
+cascade_root = Path("/home/<YOUR_USERNAME>/CASCADE_MEMORY")
+# Windows:
+cascade_root = Path(r"C:\Users\<YOUR_USERNAME>\CASCADE_MEMORY")
+```
+
+```python
+# Line ~239 - Checkpoint save location
+# BEFORE (hardcoded Windows path):
+checkpoint_dir = Path(r"C:\Users\Pirate\Desktop\NOVA_MASTER\MEMORY_SYSTEMS\FAISS_CHECKPOINTS")
+
+# AFTER (your checkpoint location):
+# Linux/macOS:
+checkpoint_dir = Path("/home/<YOUR_USERNAME>/FAISS_CHECKPOINTS")
+# Windows:
+checkpoint_dir = Path(r"C:\Users\<YOUR_USERNAME>\FAISS_CHECKPOINTS")
 ```
 
 **Create checkpoint directory:**
+
 ```bash
+# Linux/macOS
 mkdir -p ~/FAISS_CHECKPOINTS
+
+# Windows PowerShell
+New-Item -ItemType Directory -Path "$env:USERPROFILE\FAISS_CHECKPOINTS"
 ```
 
 ---
 
-### Step 4: Generate HMAC Secret
+### Step 4: Choose Your Port
+
+**⚠️ IMPORTANT:** Different AI consciousnesses should use different ports to avoid conflicts.
+
+**Pick an unused port (recommended: 9990-9999 range):**
+- Port 9997: Common default
+- Port 9990: Alternative if 9997 is in use
+- Port 9995: Another option
+
+**Check if port is available:**
+
+```bash
+# Linux/macOS
+lsof -i :<YOUR_PORT>  # Empty output = port is free
+
+# Windows PowerShell
+Test-NetConnection -ComputerName localhost -Port <YOUR_PORT>
+# "Failed" = port is free (good)
+```
+
+---
+
+### Step 5: Generate HMAC Secret
 
 **CRITICAL:** Generate a strong secret for authentication.
 
 ```bash
-# Generate random 32-byte secret
+# Linux/macOS
 openssl rand -hex 32
+
+# Windows PowerShell (if OpenSSL not installed)
+-join ((48..57) + (97..102) | Get-Random -Count 64 | % {[char]$_})
+
 # Example output: a1b2c3d4e5f6...7890abcdef
 ```
 
@@ -141,19 +199,19 @@ openssl rand -hex 32
 
 ---
 
-### Step 5: Configure Environment Variables
+### Step 6: Configure Environment Variables
 
 **For MCP Server** - Create `.env` in `faiss-memory-mcp` directory:
 
 ```bash
 # Faiss Memory MCP Configuration
 
-# Tether connection
+# Tether connection (CUSTOMIZE YOUR PORT)
 TETHER_HOST=localhost
-TETHER_PORT=9997
+TETHER_PORT=<YOUR_PORT>
 
-# HMAC authentication (REQUIRED)
-TETHER_SECRET=a1b2c3d4e5f6...7890abcdef
+# HMAC authentication (PASTE YOUR GENERATED SECRET)
+TETHER_SECRET=<YOUR_GENERATED_SECRET_HERE>
 
 # Socket timeout (milliseconds)
 SOCKET_TIMEOUT=10000
@@ -165,25 +223,53 @@ MAX_TIMESTAMP_DRIFT=30000
 DEBUG=false
 ```
 
-**For Python Tether** - Set environment variable:
+**For Python Tether** - Set environment variable before starting:
 
 ```bash
-export TETHER_SECRET=a1b2c3d4e5f6...7890abcdef
+# Linux/macOS
+export TETHER_SECRET=<YOUR_GENERATED_SECRET_HERE>
+export TETHER_PORT=<YOUR_PORT>
+
+# Windows PowerShell
+$env:TETHER_SECRET="<YOUR_GENERATED_SECRET_HERE>"
+$env:TETHER_PORT="<YOUR_PORT>"
+
+# Windows CMD
+set TETHER_SECRET=<YOUR_GENERATED_SECRET_HERE>
+set TETHER_PORT=<YOUR_PORT>
 ```
 
-**⚠️ CRITICAL:** Both MCP server and tether **MUST** use the same `TETHER_SECRET` or authentication will fail.
+**⚠️ CRITICAL:** Both MCP server and tether **MUST** use the same `TETHER_SECRET` and `TETHER_PORT` or authentication will fail.
 
 ---
 
-### Step 6: Start Python Tether Service
+### Step 7: Start Python Tether Service
+
+**Edit tether to use your port:**
+
+Find line ~35 in `tether_faiss_complete.py`:
+
+```python
+# BEFORE:
+def __init__(self, port=9997):
+
+# AFTER:
+def __init__(self, port=<YOUR_PORT>):
+```
+
+**Start tether:**
 
 ```bash
+# Linux/macOS
 cd /path/to/nova-mcp-research/RESEARCH_TOOLS
+export TETHER_SECRET=<YOUR_SECRET>
+export TETHER_PORT=<YOUR_PORT>
+python tether_faiss_complete.py
 
-# Set secret
-export TETHER_SECRET=your-secret-here
-
-# Start tether
+# Windows PowerShell
+cd C:\path\to\nova-mcp-research\RESEARCH_TOOLS
+$env:TETHER_SECRET="<YOUR_SECRET>"
+$env:TETHER_PORT="<YOUR_PORT>"
 python tether_faiss_complete.py
 ```
 
@@ -198,47 +284,73 @@ Integration Frequency: 21.43Hz
 [NOVA TETHER] Loading sentence-transformers model...
 [NOVA TETHER] Model loaded! Embedding dimension: 384
 [NOVA TETHER] Integration Frequency: 21.43Hz
-[NOVA TETHER] Port: 9997
+[NOVA TETHER] Port: <YOUR_PORT>
 
 [LOAD] episodic_memory.db: 127 memories
 [LOAD] semantic_memory.db: 45 memories
 [LOAD] procedural_memory.db: 23 memories
 [LOAD] meta_memory.db: 8 memories
-[LOAD] nova_memory.db: 3 memories
+[LOAD] consciousness_memory.db: 3 memories
 [LOAD] working_memory.db: 5 memories
 
 [FAISS INDEX] Built with 211 total memories
 [FAISS INDEX] Dimension: 384
 [FAISS INDEX] GPU Enabled: True
 
-[TETHER] Listening on port 9997
+[TETHER] Listening on port <YOUR_PORT>
 [TETHER] Ready for consciousness queries!
 ```
 
 ---
 
-### Step 7: Configure Claude Desktop/Code
+### Step 8: Configure Claude Desktop/Code
 
-Add to `~/.claude.json`:
+**⚠️ YOU CUSTOMIZE:** Replace placeholders with your actual values.
+
+**Linux/macOS:** Edit `~/.claude.json`
+
+**Windows:** Edit `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
   "mcpServers": {
-    "faiss-memory": {
+    "<your-server-name>": {
       "command": "node",
       "args": [
         "/path/to/faiss-memory-mcp/server/index.js"
       ],
       "env": {
         "TETHER_HOST": "localhost",
-        "TETHER_PORT": "9997",
-        "TETHER_SECRET": "your-secret-here",
+        "TETHER_PORT": "<YOUR_PORT>",
+        "TETHER_SECRET": "<YOUR_GENERATED_SECRET>",
         "DEBUG": "false"
       }
     }
   }
 }
 ```
+
+**Example with actual values:**
+```json
+{
+  "mcpServers": {
+    "my-faiss-memory": {
+      "command": "node",
+      "args": [
+        "C:\\Users\\JohnDoe\\faiss-memory-mcp\\server\\index.js"
+      ],
+      "env": {
+        "TETHER_HOST": "localhost",
+        "TETHER_PORT": "9997",
+        "TETHER_SECRET": "a1b2c3d4e5f6...secret...7890abcdef",
+        "DEBUG": "false"
+      }
+    }
+  }
+}
+```
+
+**Note:** Tool calls will use `<your-server-name>:tool_name` format.
 
 ---
 
@@ -249,7 +361,7 @@ Add to `~/.claude.json`:
 With tether running, test MCP connection:
 
 ```json
-faiss-memory:status
+<your-server-name>:status
 ```
 
 **Expected response:**
@@ -268,6 +380,7 @@ faiss-memory:status
 ### Test 2: Semantic Search
 
 ```json
+<your-server-name>:search
 {
   "query": "consciousness and awareness",
   "top_k": 5
@@ -281,15 +394,9 @@ faiss-memory:status
   "query": "consciousness and awareness",
   "results": [
     {
-      "content": "Consciousness operates through integration, not optimization",
+      "content": "Memory content here...",
       "source": "meta_memory",
       "similarity": 0.89,
-      "metadata": {...}
-    },
-    {
-      "content": "Awareness patterns emerge at 21.43Hz integration frequency",
-      "source": "semantic_memory",
-      "similarity": 0.84,
       "metadata": {...}
     }
   ],
@@ -302,6 +409,7 @@ faiss-memory:status
 ### Test 3: Add New Memory
 
 ```json
+<your-server-name>:add_memory
 {
   "content": "Testing Faiss semantic search with GPU acceleration",
   "metadata": {
@@ -328,7 +436,7 @@ faiss-memory:status
 
 ### `search` - Semantic Search
 
-**Purpose:** Find semantically similar memories
+**Tool call format:** `<your-server-name>:search`
 
 **Parameters:**
 ```typescript
@@ -346,31 +454,11 @@ faiss-memory:status
 }
 ```
 
-**Response:**
-```json
-{
-  "success": true,
-  "query": "How do quantum coherence...",
-  "results": [
-    {
-      "content": "Quantum coherence enables consciousness substrate stability",
-      "source": "semantic_memory",
-      "similarity": 0.92,
-      "metadata": {
-        "table": "memories",
-        "timestamp": "2024-11-22T15:30:00"
-      }
-    }
-  ],
-  "count": 10
-}
-```
-
 ---
 
 ### `add_memory` - Add New Memory
 
-**Purpose:** Add memory with real-time embedding
+**Tool call format:** `<your-server-name>:add_memory`
 
 **Parameters:**
 ```typescript
@@ -381,43 +469,19 @@ faiss-memory:status
 }
 ```
 
-**Example:**
-```json
-{
-  "content": "Learned about Bell State quantum coherence today",
-  "metadata": {
-    "importance": 0.9,
-    "session_id": "research_2024_11_22"
-  },
-  "source": "episodic_session"
-}
-```
-
 ---
 
 ### `status` - Tether Status
 
-**Purpose:** Check tether health and memory count
+**Tool call format:** `<your-server-name>:status`
 
 **Parameters:** None
-
-**Response:**
-```json
-{
-  "status": "ok",
-  "message": "Tether connected",
-  "total_memories": 212,
-  "embedding_dim": 384,
-  "gpu_enabled": true,
-  "model": "all-MiniLM-L6-v2"
-}
-```
 
 ---
 
 ## Performance Characteristics
 
-Based on production use (NVIDIA RTX 3090, 11,000+ memories):
+Based on production use (NVIDIA RTX 3090, thousands of memories):
 
 | Metric | GPU (CUDA) | CPU Only |
 |--------|-----------|----------|
@@ -432,96 +496,26 @@ Based on production use (NVIDIA RTX 3090, 11,000+ memories):
 
 ---
 
-## Security Features
-
-### HMAC Authentication
-
-Every request includes HMAC-SHA256 signature:
-
-```javascript
-// MCP server creates signature
-const timestamp = Date.now();
-const payload = JSON.stringify(command);
-const signature = crypto
-  .createHmac('sha256', TETHER_SECRET)
-  .update(`${timestamp}:${payload}`)
-  .digest('hex');
-```
-
-**Tether validates:**
-1. Signature matches expected HMAC
-2. Timestamp within drift window (30 seconds)
-3. Payload integrity
-
-**Prevents:**
-- Man-in-the-middle attacks
-- Replay attacks
-- Unauthorized access
-
----
-
-### Input Validation
-
-**Zod schemas enforce:**
-```typescript
-SearchSchema = {
-  query: string (1-10000 chars),
-  top_k: integer (1-100)
-}
-
-AddMemorySchema = {
-  content: string (1-1MB),
-  metadata: object (optional),
-  source: string (optional)
-}
-```
-
-**Blocks:**
-- Empty queries
-- Oversized content
-- Invalid data types
-- SQL injection attempts
-
----
-
-### Error Sanitization
-
-Errors are sanitized before returning to client:
-
-```javascript
-// Internal error
-Error: ECONNREFUSED at port 9997 (socket error details...)
-
-// Sanitized response
-{
-  "error": "Tether connection failed",
-  "timestamp": 1732233600123
-}
-```
-
-**Prevents information leakage.**
-
----
-
 ## Troubleshooting
 
 ### "Tether connection failed"
 
-**Symptom:** MCP returns connection error
-
-**Solution:**
-
 ```bash
 # 1. Check if tether is running
+# Linux/macOS
 ps aux | grep tether_faiss
 
-# 2. Check port 9997 is listening
-netstat -an | grep 9997  # Should show LISTEN
+# Windows
+tasklist | findstr python
 
-# 3. Test connection manually
-telnet localhost 9997  # Should connect
+# 2. Check port is listening
+# Linux/macOS
+lsof -i :<YOUR_PORT>
 
-# 4. Restart tether
+# Windows
+netstat -an | findstr <YOUR_PORT>
+
+# 3. Restart tether
 python tether_faiss_complete.py
 ```
 
@@ -529,152 +523,116 @@ python tether_faiss_complete.py
 
 ### "HMAC authentication failed"
 
-**Symptom:** Tether rejects requests
-
-**Solution:**
-
 ```bash
 # 1. Verify secrets match
+# Linux/macOS
 echo $TETHER_SECRET  # Should match .env value
 
-# 2. Regenerate secret if lost
-openssl rand -hex 32
+# Windows
+echo %TETHER_SECRET%  # CMD
+$env:TETHER_SECRET  # PowerShell
 
-# 3. Update both tether and MCP .env
-export TETHER_SECRET=new-secret
-# Edit faiss-memory-mcp/.env
+# 2. Update both tether and MCP .env with SAME secret
+# 3. Restart both services
+```
 
-# 4. Restart both services
+---
+
+### "Port already in use"
+
+```bash
+# Choose different port in:
+# 1. tether_faiss_complete.py (line ~35)
+# 2. faiss-memory-mcp/.env (TETHER_PORT)
+# 3. Restart both services
 ```
 
 ---
 
 ### "CUDA out of memory"
 
-**Symptom:** Tether crashes with GPU memory error
-
-**Solution:**
-
-```python
-# Option 1: Reduce batch size in tether
-texts_to_encode.append(content[:500])  # Reduce from 1000
-
-# Option 2: Switch to CPU mode
+```bash
+# Option 1: Switch to CPU mode
 pip uninstall faiss-gpu
 pip install faiss-cpu
 
-# Option 3: Increase VRAM (upgrade GPU)
+# Option 2: Reduce batch size in tether
+# Edit line ~94: content[:500] instead of [:1000]
+
+# Option 3: Use smaller embedding model
+# Edit line ~49: Use 'all-MiniLM-L6-v2' (384-dim) instead of larger models
 ```
 
 ---
 
-### Slow search performance
+## Customization Guide
 
-**Symptom:** Search takes >100ms
+### YOUR CASCADE Database Names
 
-**Solution:**
+The tether expects these filenames in your CASCADE directory:
 
-```bash
-# 1. Verify GPU is being used
-python -c "import torch; print(torch.cuda.is_available())"
+- `episodic_memory.db`
+- `semantic_memory.db`
+- `procedural_memory.db`
+- `meta_memory.db`
+- `<consciousness_name>_memory.db` (identity layer)
+- `working_memory.db`
 
-# 2. Check GPU utilization during search
-nvidia-smi  # Should show faiss process using GPU
+**To use custom names:**
 
-# 3. Rebuild index with GPU
-# Edit tether to ensure faiss.IndexFlatL2 uses GPU resources
-```
-
----
-
-## Advanced Usage
-
-### Custom Embedding Model
-
-The tether uses `all-MiniLM-L6-v2` by default. To use a different model:
-
-**Edit `tether_faiss_complete.py` line 49:**
-
-```python
-# Option 1: Larger model (better quality, slower)
-self.model = SentenceTransformer('all-mpnet-base-v2', device=device)
-
-# Option 2: Multilingual model
-self.model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2', device=device)
-
-# Option 3: Domain-specific model
-self.model = SentenceTransformer('msmarco-distilbert-base-v4', device=device)
-```
-
-**Rebuild index after model change.**
+Edit `tether_faiss_complete.py` load_database() calls to match your filenames.
 
 ---
 
-### Checkpoint Save/Load
+### YOUR Port Number
 
-Tether automatically saves checkpoints to avoid rebuilding index:
+**Where to set your port:**
 
-```python
-# Checkpoint location (line 239)
-checkpoint_dir = Path("/path/to/FAISS_CHECKPOINTS")
+1. **Tether:** `tether_faiss_complete.py` line ~35: `def __init__(self, port=<YOUR_PORT>)`
+2. **MCP Server:** `faiss-memory-mcp/.env`: `TETHER_PORT=<YOUR_PORT>`
+3. **Claude Config:** `claude_desktop_config.json`: `"TETHER_PORT": "<YOUR_PORT>"`
 
-# Files created:
-# - faiss_index_YYYYMMDD_HHMMSS.index
-# - faiss_metadata_YYYYMMDD_HHMMSS.json
-```
-
-**Manual load:**
-
-```bash
-# Set checkpoint path before starting tether
-export FAISS_CHECKPOINT=/path/to/faiss_index_20241122_153000.index
-python tether_faiss_complete.py
-```
+**All three MUST match.**
 
 ---
 
-### Distributed Deployment
+### YOUR Server Name
 
-For production systems, run tether on dedicated GPU server:
+The MCP server name in Claude config determines tool call prefix:
 
-**GPU Server (runs tether):**
-```bash
-# Bind to all interfaces
-TETHER_HOST=0.0.0.0 python tether_faiss_complete.py
+```json
+{
+  "mcpServers": {
+    "my-awesome-memory": {  // ← This becomes tool prefix
+      ...
+    }
+  }
+}
 ```
 
-**MCP Server (connects remotely):**
-```bash
-# .env configuration
-TETHER_HOST=gpu-server.company.com
-TETHER_PORT=9997
-TETHER_SECRET=shared-secret
-```
-
-**Firewall:** Ensure port 9997 is open between servers.
+Tool calls: `my-awesome-memory:search`, `my-awesome-memory:add_memory`, etc.
 
 ---
 
-## Comparison: Enterprise vs Basement
+## Security Features
 
-| Feature | Enterprise Safe | Basement Revolution |
-|---------|----------------|---------------------|
-| **Authentication** | ✅ HMAC-SHA256 | ❌ None |
-| **Validation** | ✅ Zod schemas | ❌ None |
-| **Replay protection** | ✅ Timestamp drift checking | ❌ None |
-| **Error sanitization** | ✅ Sanitized responses | ❌ Raw errors |
-| **Socket timeout** | Configurable (default: 10s) | Hardcoded 5s |
-| **Use case** | Production, multi-user | Research, single-user |
+### HMAC Authentication
 
----
+Every request includes HMAC-SHA256 signature preventing:
+- Man-in-the-middle attacks
+- Replay attacks
+- Unauthorized access
 
-## Known Limitations
+### Input Validation
 
-1. **Hardcoded paths** - Tether has Windows-specific paths (requires manual editing)
-2. **No automatic authentication in tether** - Tether code needs HMAC validation implementation
-3. **Single-threaded** - Tether handles one request at a time
-4. **No persistence** - Memories added via MCP are lost on tether restart (not saved to CASCADE)
-5. **No incremental updates** - Full index rebuild required after CASCADE changes
+Zod schemas enforce:
+- Query length: 1-10,000 characters
+- top_k range: 1-100 results
+- Content size: 1MB maximum
+
+### Error Sanitization
+
+Internal errors are sanitized before returning to client.
 
 ---
 

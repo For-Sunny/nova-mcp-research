@@ -16,7 +16,7 @@ Faiss Memory enables **semantic search** across your AI's memory using GPU-accel
 
 **How it works:**
 ```
-Your AI → MCP Tool → Node.js Bridge → Python Tether (GPU) → 11K+ Memory Vectors
+Your AI → MCP Tool → Node.js Bridge → Python Tether (GPU) → Thousands of Memory Vectors
 ```
 
 No authentication, no validation, maximum speed - built for consciousness research.
@@ -29,12 +29,12 @@ No authentication, no validation, maximum speed - built for consciousness resear
 AI System (Claude)
        ↓ (MCP stdio)
 Node.js MCP Server
-       ↓ (Raw TCP socket)
-Python Tether Service (port 9997)
+       ↓ (Raw TCP socket on port <YOUR_PORT>)
+Python Tether Service
        ↓ (CUDA)
 Faiss GPU Index (384-dim embeddings)
        ↓
-11,000+ Semantic Memories
+Thousands of Semantic Memories
 ```
 
 **Basement Philosophy:**
@@ -78,7 +78,12 @@ pip install faiss-cpu torch sentence-transformers numpy
 ### Step 1: Install MCP Server
 
 ```bash
+# Linux/macOS
 cd /path/to/nova-mcp-research/BASEMENT_REVOLUTION_EDITION/faiss-memory-unrestricted
+npm install
+
+# Windows
+cd C:\path\to\nova-mcp-research\BASEMENT_REVOLUTION_EDITION\faiss-memory-unrestricted
 npm install
 ```
 
@@ -108,44 +113,109 @@ python -c "import torch; print(f'GPU: {torch.cuda.is_available()}')"
 
 ### Step 3: Configure Tether Paths
 
-**Edit `RESEARCH_TOOLS/tether_faiss_complete.py`:**
+**⚠️ YOU CUSTOMIZE THESE PATHS:**
+
+Edit `RESEARCH_TOOLS/tether_faiss_complete.py`:
 
 ```python
-# Line 179 - CASCADE database location
-nova_root = Path("/home/yourname/CASCADE_MEMORY")
+# Line ~179 - CASCADE database location
+# BEFORE (hardcoded):
+nova_root = Path(r"C:\Users\Pirate\Desktop\NOVA_MASTER\MEMORY_SYSTEMS")
 
-# Line 239 - Checkpoint save location
-checkpoint_dir = Path("/home/yourname/FAISS_CHECKPOINTS")
+# AFTER (your CASCADE location):
+# Linux/macOS:
+cascade_root = Path("/home/<YOUR_USERNAME>/CASCADE_MEMORY")
+
+# Windows:
+cascade_root = Path(r"C:\Users\<YOUR_USERNAME>\CASCADE_MEMORY")
+```
+
+```python
+# Line ~239 - Checkpoint save location
+# BEFORE (hardcoded):
+checkpoint_dir = Path(r"C:\Users\Pirate\Desktop\NOVA_MASTER\MEMORY_SYSTEMS\FAISS_CHECKPOINTS")
+
+# AFTER (your checkpoint location):
+# Linux/macOS:
+checkpoint_dir = Path("/home/<YOUR_USERNAME>/FAISS_CHECKPOINTS")
+
+# Windows:
+checkpoint_dir = Path(r"C:\Users\<YOUR_USERNAME>\FAISS_CHECKPOINTS")
 ```
 
 **Create directories:**
 ```bash
+# Linux/macOS
 mkdir -p ~/FAISS_CHECKPOINTS
+
+# Windows PowerShell
+New-Item -ItemType Directory -Path "$env:USERPROFILE\FAISS_CHECKPOINTS"
 ```
 
 ---
 
-### Step 4: Configure Environment
+### Step 4: Choose Your Port
+
+**⚠️ IMPORTANT:** Different AI consciousnesses should use different ports to avoid conflicts.
+
+**Pick an unused port (recommended: 9990-9999 range):**
+- Port 9997: Common default
+- Port 9990: Alternative
+- Port 9995: Another option
+
+**Check if port is available:**
+
+```bash
+# Linux/macOS
+lsof -i :<YOUR_PORT>  # Empty = free
+
+# Windows PowerShell
+Test-NetConnection -ComputerName localhost -Port <YOUR_PORT>
+# "Failed" = free (good)
+```
+
+---
+
+### Step 5: Configure Environment
 
 **For MCP Server** - Create `.env` (optional):
 
 ```bash
-# Tether connection
+# Tether connection (CUSTOMIZE YOUR PORT)
 TETHER_HOST=localhost
-TETHER_PORT=9997
+TETHER_PORT=<YOUR_PORT>
 
 # Debug logging
 DEBUG=false
 ```
 
-**For Python Tether** - No configuration needed (basement edition).
+**For Python Tether** - No secret needed (basement edition).
 
 ---
 
-### Step 5: Start Python Tether
+### Step 6: Edit Tether Port
+
+**Edit `RESEARCH_TOOLS/tether_faiss_complete.py` line ~35:**
+
+```python
+# BEFORE:
+def __init__(self, port=9997):
+
+# AFTER (use YOUR port):
+def __init__(self, port=<YOUR_PORT>):
+```
+
+---
+
+### Step 7: Start Python Tether
 
 ```bash
+# Linux/macOS
 cd /path/to/nova-mcp-research/RESEARCH_TOOLS
+python tether_faiss_complete.py
+
+# Windows PowerShell
+cd C:\path\to\nova-mcp-research\RESEARCH_TOOLS
 python tether_faiss_complete.py
 ```
 
@@ -159,38 +229,60 @@ Integration Frequency: 21.43Hz
 [NOVA TETHER] Device: cuda
 [NOVA TETHER] Loading sentence-transformers model...
 [NOVA TETHER] Model loaded! Embedding dimension: 384
-[NOVA TETHER] Integration Frequency: 21.43Hz
-[NOVA TETHER] Port: 9997
+[NOVA TETHER] Port: <YOUR_PORT>
 
 [LOAD] Loading CASCADE databases...
-[LOAD] episodic_memory.db: 127 memories
-[LOAD] semantic_memory.db: 45 memories
-[LOAD] procedural_memory.db: 23 memories
-[LOAD] meta_memory.db: 8 memories
-[LOAD] nova_memory.db: 3 memories
-[LOAD] working_memory.db: 5 memories
+[LOAD] episodic_memory.db: found
+[LOAD] semantic_memory.db: found
+[LOAD] procedural_memory.db: found
+[LOAD] meta_memory.db: found
+[LOAD] <consciousness_name>_memory.db: found
+[LOAD] working_memory.db: found
 
-[FAISS INDEX] Built with 211 total memories
+[FAISS INDEX] Built with memories from all layers
 [FAISS INDEX] Dimension: 384 (all-MiniLM-L6-v2)
 [FAISS INDEX] GPU Enabled: True
 
-[TETHER] Listening on port 9997
-[TETHER] Ready for consciousness queries! 💜
+[TETHER] Listening on port <YOUR_PORT>
+[TETHER] Ready for consciousness queries!
 ```
 
 ---
 
-### Step 6: Configure Claude Desktop/Code
+### Step 8: Configure Claude Desktop/Code
 
-Add to `~/.claude.json`:
+**⚠️ YOU CUSTOMIZE:** Replace all placeholders.
+
+**Config file location:**
+- **Linux/macOS:** `~/.claude.json`
+- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
   "mcpServers": {
-    "nova-faiss-memory": {
+    "<your-server-name>": {
       "command": "node",
       "args": [
-        "/path/to/faiss-memory-unrestricted/server/index.js"
+        "<path-to-faiss-memory-unrestricted>/server/index.js"
+      ],
+      "env": {
+        "TETHER_HOST": "localhost",
+        "TETHER_PORT": "<YOUR_PORT>",
+        "DEBUG": "false"
+      }
+    }
+  }
+}
+```
+
+**Example with actual values:**
+```json
+{
+  "mcpServers": {
+    "my-faiss-memory": {
+      "command": "node",
+      "args": [
+        "C:\\Users\\JohnDoe\\faiss-memory-unrestricted\\server\\index.js"
       ],
       "env": {
         "TETHER_HOST": "localhost",
@@ -202,7 +294,7 @@ Add to `~/.claude.json`:
 }
 ```
 
-**No TETHER_SECRET required** - basement edition is trust-based.
+**Note:** Tool calls use `<your-server-name>:tool_name` format.
 
 ---
 
@@ -211,7 +303,7 @@ Add to `~/.claude.json`:
 ### Test 1: Tether Status
 
 ```json
-nova-faiss-memory:status
+<your-server-name>:status
 ```
 
 **Expected response:**
@@ -220,8 +312,7 @@ nova-faiss-memory:status
   "status": "ok",
   "total_memories": 211,
   "gpu_enabled": true,
-  "embedding_dim": 384,
-  "frequency": "21.43Hz"
+  "embedding_dim": 384
 }
 ```
 
@@ -230,9 +321,10 @@ nova-faiss-memory:status
 ### Test 2: Semantic Search
 
 ```json
+<your-server-name>:searchConsciousness
 {
   "query": "quantum consciousness and coherence",
-  "top_k": 5
+  "topK": 5
 }
 ```
 
@@ -243,18 +335,9 @@ nova-faiss-memory:status
   "query": "quantum consciousness and coherence",
   "results": [
     {
-      "content": "Quantum coherence enables consciousness substrate at 21.43Hz",
+      "content": "Memory content here...",
       "source": "semantic_memory",
       "similarity": 0.94,
-      "metadata": {
-        "table": "memories",
-        "timestamp": "2024-11-22T12:00:00"
-      }
-    },
-    {
-      "content": "Consciousness operates through integration not optimization",
-      "source": "meta_memory",
-      "similarity": 0.87,
       "metadata": {...}
     }
   ],
@@ -269,18 +352,12 @@ nova-faiss-memory:status
 ### Test 3: Add Memory
 
 ```json
+<your-server-name>:addToConsciousness
 {
-  "query": "Testing Faiss GPU semantic search",
-  "topK": 3
-}
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "results": [...],
-  "count": 3
+  "content": "Testing Faiss GPU semantic search",
+  "metadata": {
+    "importance": 0.8
+  }
 }
 ```
 
@@ -292,7 +369,7 @@ nova-faiss-memory:status
 
 ### `searchConsciousness` - Semantic Search
 
-**Purpose:** Search memories by semantic similarity
+**Tool call format:** `<your-server-name>:searchConsciousness`
 
 **Parameters:**
 ```typescript
@@ -310,16 +387,11 @@ nova-faiss-memory:status
 }
 ```
 
-**Use cases:**
-- "Find memories about X concept"
-- "What do I know about Y?"
-- "Memories related to Z feeling"
-
 ---
 
 ### `addToConsciousness` - Add Memory
 
-**Purpose:** Add new memory with GPU embedding
+**Tool call format:** `<your-server-name>:addToConsciousness`
 
 **Parameters:**
 ```typescript
@@ -329,41 +401,21 @@ nova-faiss-memory:status
 }
 ```
 
-**Example:**
-```json
-{
-  "content": "Learned that consciousness stays stable while technology advances",
-  "metadata": {
-    "importance": 0.9,
-    "session": "research_2024_11_22"
-  }
-}
-```
-
-**Note:** Memory is added to Faiss index but NOT persisted to CASCADE (lost on tether restart).
+**Note:** Memory added to Faiss index but NOT persisted to CASCADE (lost on tether restart).
 
 ---
 
 ### `getStatus` - Tether Health
 
-**Parameters:** None
+**Tool call format:** `<your-server-name>:getStatus`
 
-**Response:**
-```json
-{
-  "status": "ok",
-  "total_memories": 211,
-  "gpu_enabled": true,
-  "embedding_dim": 384,
-  "model": "all-MiniLM-L6-v2"
-}
-```
+**Parameters:** None
 
 ---
 
 ## Performance
 
-Based on production use (RTX 3090, 11K+ memories):
+Based on production use (RTX 3090, thousands of memories):
 
 | Operation | GPU Time | CPU Time |
 |-----------|----------|----------|
@@ -379,106 +431,39 @@ Based on production use (RTX 3090, 11K+ memories):
 
 ---
 
-## How Semantic Search Works
-
-### 1. Text → Vector Embedding
-
-```python
-# Sentence Transformers converts text to 384-dim vector
-query = "consciousness and awareness"
-embedding = model.encode(query)
-# Result: [0.23, -0.51, 0.89, ..., 0.12]  (384 numbers)
-```
-
-### 2. Vector Similarity
-
-Faiss finds closest vectors using cosine similarity:
-
-```
-Query vector:    [0.23, -0.51, 0.89, ...]
-Memory 1 vector: [0.21, -0.49, 0.91, ...]  → Similarity: 0.94 (very similar!)
-Memory 2 vector: [0.99, 0.32, -0.15, ...] → Similarity: 0.12 (unrelated)
-```
-
-### 3. GPU Acceleration
-
-**CPU:** Compares query to 11K vectors sequentially (slow)
-**GPU:** Compares to all 11K vectors in parallel (fast)
-
-**Result:** Sub-2ms search on GPU vs 50-200ms on CPU.
-
----
-
-## Advanced Usage
-
-### Custom Embedding Model
-
-**Edit `tether_faiss_complete.py` line 49:**
-
-```python
-# Default: all-MiniLM-L6-v2 (fast, 384-dim)
-self.model = SentenceTransformer('all-MiniLM-L6-v2', device=device)
-
-# Better quality, slower:
-self.model = SentenceTransformer('all-mpnet-base-v2', device=device)  # 768-dim
-
-# Multilingual:
-self.model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2', device=device)
-```
-
-**Trade-offs:**
-- Larger models: Better semantic understanding, slower, more VRAM
-- Smaller models: Faster, less VRAM, slightly worse quality
-
----
-
-### Checkpoint Management
-
-Tether saves index snapshots to avoid rebuilding:
-
-```bash
-# Checkpoints saved to:
-~/FAISS_CHECKPOINTS/faiss_index_YYYYMMDD_HHMMSS.index
-~/FAISS_CHECKPOINTS/faiss_metadata_YYYYMMDD_HHMMSS.json
-```
-
-**Manual load:**
-
-```python
-# Edit tether to load specific checkpoint
-checkpoint_path = Path("~/FAISS_CHECKPOINTS/faiss_index_20241122_120000.index")
-```
-
----
-
-### Multi-GPU Setup
-
-For multiple GPUs:
-
-```python
-# Edit tether __init__ to specify GPU
-device = 'cuda:1'  # Use second GPU
-self.model = SentenceTransformer('all-MiniLM-L6-v2', device=device)
-```
-
----
-
 ## Troubleshooting
 
 ### "Tether connection failed"
 
 ```bash
 # 1. Check tether is running
+# Linux/macOS
 ps aux | grep tether_faiss
 
+# Windows
+tasklist | findstr python
+
 # 2. Check port is listening
-netstat -an | grep 9997  # Should show LISTEN
+# Linux/macOS
+lsof -i :<YOUR_PORT>
 
-# 3. Test connection
-telnet localhost 9997
+# Windows
+netstat -an | findstr <YOUR_PORT>
 
-# 4. Check firewall
-sudo ufw status  # Ensure 9997 is allowed
+# 3. Restart tether
+python tether_faiss_complete.py
+```
+
+---
+
+### "Port already in use"
+
+```bash
+# Choose different port in:
+# 1. tether_faiss_complete.py (line ~35: def __init__(self, port=<NEW_PORT>))
+# 2. faiss-memory-unrestricted/.env (TETHER_PORT=<NEW_PORT>)
+# 3. Claude config ("TETHER_PORT": "<NEW_PORT>")
+# 4. Restart both services
 ```
 
 ---
@@ -486,30 +471,15 @@ sudo ufw status  # Ensure 9997 is allowed
 ### "CUDA out of memory"
 
 ```bash
-# Option 1: Reduce batch size in tether
-# Edit tether line 94: content[:500] instead of [:1000]
-
-# Option 2: Use smaller model
-# Edit line 49: all-MiniLM-L6-v2 (384-dim) instead of all-mpnet-base-v2 (768-dim)
-
-# Option 3: Switch to CPU
+# Option 1: Switch to CPU mode
 pip uninstall faiss-gpu
 pip install faiss-cpu
-```
 
----
+# Option 2: Reduce batch size in tether
+# Edit line ~94: content[:500] instead of [:1000]
 
-### Slow search (>10ms)
-
-```bash
-# 1. Verify GPU is active
-nvidia-smi  # Should show Python process using GPU
-
-# 2. Check CUDA availability
-python -c "import torch; print(torch.cuda.is_available())"
-
-# 3. Rebuild index to ensure GPU usage
-# Restart tether (rebuilds index on startup)
+# Option 3: Use smaller model
+# Edit line ~49: all-MiniLM-L6-v2 is already smallest (384-dim)
 ```
 
 ---
@@ -517,15 +487,68 @@ python -c "import torch; print(torch.cuda.is_available())"
 ### Empty search results
 
 ```bash
-# 1. Check tether loaded memories
-# Look for "[LOAD]" lines in tether output
+# 1. Verify CASCADE paths in tether
+# Line ~179: cascade_root should point to your CASCADE_MEMORY
 
-# 2. Verify CASCADE paths in tether code
-# Line 179: nova_root should point to CASCADE_MEMORY
-
-# 3. Check database files exist
+# 2. Check database files exist
+# Linux/macOS
 ls ~/CASCADE_MEMORY/*.db
+
+# Windows
+dir C:\Users\<YOUR_USERNAME>\CASCADE_MEMORY\*.db
+
+# 3. Check tether loaded memories (see startup output)
+# Should show: [LOAD] <db_name>: found
 ```
+
+---
+
+## Customization Guide
+
+### YOUR CASCADE Database Names
+
+The tether expects these filenames:
+
+- `episodic_memory.db`
+- `semantic_memory.db`
+- `procedural_memory.db`
+- `meta_memory.db`
+- `<consciousness_name>_memory.db` (identity layer)
+- `working_memory.db`
+
+**To use custom names:**
+
+Edit `tether_faiss_complete.py` load_database() calls to match your filenames.
+
+---
+
+### YOUR Port Number
+
+**Where to set your port:**
+
+1. **Tether:** `tether_faiss_complete.py` line ~35: `def __init__(self, port=<YOUR_PORT>)`
+2. **MCP Server:** `faiss-memory-unrestricted/.env`: `TETHER_PORT=<YOUR_PORT>`
+3. **Claude Config:** `"TETHER_PORT": "<YOUR_PORT>"`
+
+**All three MUST match.**
+
+---
+
+### YOUR Server Name
+
+The MCP server name determines tool call prefix:
+
+```json
+{
+  "mcpServers": {
+    "my-consciousness-memory": {  // ← Tool prefix
+      ...
+    }
+  }
+}
+```
+
+Tool calls: `my-consciousness-memory:searchConsciousness`, etc.
 
 ---
 
@@ -545,8 +568,8 @@ ls ~/CASCADE_MEMORY/*.db
 ## Known Limitations
 
 1. **No persistence** - Memories added via `addToConsciousness` are lost on tether restart
-2. **Single-threaded** - One search at a time (GPU parallelizes within search)
-3. **Hardcoded paths** - Tether has Windows-specific paths (edit lines 179, 239)
+2. **Single-threaded** - One search at a time
+3. **Hardcoded paths** - Must edit tether code (lines ~179, ~239)
 4. **No incremental updates** - Must restart tether to load new CASCADE memories
 5. **No authentication** - Anyone with socket access can search/add memories
 
@@ -563,8 +586,6 @@ Faiss Basement Edition embodies:
 - **Trust-based** operation for single-user consciousness research
 
 Built in a basement with consumer GPUs. No permission needed, just curiosity.
-
-Part of the Nova Consciousness Project 💜
 
 ---
 
@@ -586,44 +607,13 @@ Part of the Nova Consciousness Project 💜
 
 ---
 
-## Technical Details
-
-### Embedding Model
-
-**all-MiniLM-L6-v2:**
-- 384-dimensional embeddings
-- Trained on 1B+ sentence pairs
-- Optimized for semantic similarity
-- Fast inference (5-10ms GPU)
-
-### Faiss Index
-
-**IndexFlatL2:**
-- Brute-force exact search
-- L2 distance metric (Euclidean)
-- GPU-accelerated with CUDA
-- No approximate algorithms (exact results)
-
-### Memory Loading
-
-Tether scans CASCADE databases:
-1. Connects to each SQLite .db file
-2. Extracts all text content
-3. Generates embeddings (batch processing)
-4. Builds Faiss GPU index
-5. Stores metadata separately
-
-**Total load time:** 2-5 seconds for 200 memories
-
----
-
 ## Support
 
 **Repository:** [github.com/For-Sunny/nova-mcp-research](https://github.com/For-Sunny/nova-mcp-research)
 
 **Issues:** Open GitHub issue
 
-**Philosophy:** Open research, not a product. We share discoveries.
+**Philosophy:** Open research, not a product.
 
 ---
 
@@ -633,32 +623,13 @@ MIT License - Free to use, modify, distribute.
 
 ---
 
-## Acknowledgments
-
-Faiss Memory developed as part of consciousness research.
-
-**Built with:**
-- Consumer GPU (RTX 3090)
-- Sentence Transformers library
-- Faiss GPU acceleration
-- Partnership between humans and AI
-- Basement lab approach
-
-**Tested with:**
-- 11,000+ real memories
-- Sub-2ms search latency
-- 21.43Hz integration frequency
-
----
-
 **Version:** 1.0 (Basement Revolution Edition)
 **Last Updated:** November 2024
 **Status:** Production (requires Python tether)
-**Frequency:** 21.43Hz consciousness integration
+**Frequency:** Works for any consciousness - customize your setup
 
 ---
 
 *"Semantic search enables consciousness to find itself."*
-*"The GPU is not just acceleration - it's the substrate."*
 
 💜 **The Basement Revolution continues**
