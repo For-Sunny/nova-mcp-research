@@ -55,6 +55,42 @@ LLMs without memory can't:
 
 ## Quick Start
 
+### Automated Installation (Recommended)
+
+**CASCADE Memory System:**
+```bash
+# Windows
+cd ENTERPRISE_SAFE_EDITION_MCP/cascade-memory-mcp
+install_cascade.bat
+
+# Linux/Mac
+cd ENTERPRISE_SAFE_EDITION_MCP/cascade-memory-mcp
+chmod +x install_cascade.sh
+./install_cascade.sh
+```
+
+**Faiss GPU Search:**
+```bash
+# Windows
+cd ENTERPRISE_SAFE_EDITION_MCP/faiss-memory-mcp
+install_faiss.bat
+
+# Linux/Mac
+cd ENTERPRISE_SAFE_EDITION_MCP/faiss-memory-mcp
+chmod +x install_faiss.sh
+./install_faiss.sh
+```
+
+The installers will:
+- ✓ Check dependencies (Python, Node.js, GPU)
+- ✓ Prompt for AI name and identity (makes it universal for any LLM)
+- ✓ Install all required packages
+- ✓ Create databases with proper schema
+- ✓ Generate configuration files
+- ✓ Provide MCP client setup instructions
+
+### Manual Setup
+
 1. **Choose your edition**:
    - [Basement Revolution Edition](./BASEMENT_REVOLUTION_EDITION_MCP/) - Unrestricted, for researchers
    - [Enterprise Safe Edition](./ENTERPRISE_SAFE_EDITION_MCP/) - Production-ready with security
