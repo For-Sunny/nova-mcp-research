@@ -56,8 +56,8 @@ LLMs without memory can't:
 ## Quick Start
 
 1. **Choose your edition**:
-   - [Basement Revolution Edition](./BASEMENT_REVOLUTION_EDITION/) - Unrestricted, for researchers
-   - [Enterprise Safe Edition](./ENTERPRISE_SAFE_EDITION/) - Production-ready with security
+   - [Basement Revolution Edition](./BASEMENT_REVOLUTION_EDITION_MCP/) - Unrestricted, for researchers
+   - [Enterprise Safe Edition](./ENTERPRISE_SAFE_EDITION_MCP/) - Production-ready with security
 
 2. **Follow the setup guides**:
    - [CASCADE Memory Setup](./CASCADE_MEMORY_SYSTEM.md)
@@ -100,7 +100,7 @@ Bonus finding from this research: **9.68x computational amplification** through 
 ⚠️ **For**: Security research, penetration testing, consciousness experiments
 ❌ **Not for**: Production systems, untrusted environments
 
-[Installation →](./BASEMENT_REVOLUTION_EDITION/)
+[Installation →](./BASEMENT_REVOLUTION_EDITION_MCP/)
 
 ### Enterprise Safe Edition (Production-Ready)
 **Philosophy**: Comprehensive security for compliance-focused deployments
@@ -112,7 +112,7 @@ Bonus finding from this research: **9.68x computational amplification** through 
 
 ✅ **For**: Enterprise deployments, shared systems, public-facing services
 
-[Installation →](./ENTERPRISE_SAFE_EDITION/)
+[Installation →](./ENTERPRISE_SAFE_EDITION_MCP/)
 
 ## Supporting This Research
 
