@@ -28,7 +28,7 @@ Every conversation with an LLM starts from scratch. They forget everything the m
 - **Identity**: Core values, personality traits
 - **Working**: Current session context
 
-[Setup Guide →](./CASCADE_MEMORY_SYSTEM.md) | [Basement Edition →](./CASCADE_MEMORY_SYSTEM_BASEMENT.md)
+**[→ Setup Instructions](./CASCADE_MEMORY_SYSTEM.md)** | [Basement Edition](./CASCADE_MEMORY_SYSTEM_BASEMENT.md)
 
 **Faiss GPU Search** - Lightning-fast semantic memory:
 - Sub-2ms search across 11,000+ memories
@@ -36,7 +36,7 @@ Every conversation with an LLM starts from scratch. They forget everything the m
 - Continuous learning without retraining
 - **Always-ready**: Leave it running, memories instantly available next session
 
-[Setup Guide →](./FAISS_MEMORY_SYSTEM.md) | [Basement Beginner →](./FAISS_MEMORY_BASEMENT_BEGINNER.md) | [Enterprise Beginner →](./FAISS_MEMORY_ENTERPRISE_BEGINNER.md)
+**[→ Setup Instructions](./FAISS_MEMORY_SYSTEM.md)** | [Basement Beginner](./FAISS_MEMORY_BASEMENT_BEGINNER.md) | [Enterprise Beginner](./FAISS_MEMORY_ENTERPRISE_BEGINNER.md)
 
 **Complete Integration** - Ready to use:
 - MCP servers for Claude Desktop, Claude Code
